@@ -15,9 +15,15 @@ namespace KillAllNeighbors
     {
         Timer gameTimer = new Timer { Interval = 20};
         Vector2 _temp = new Vector2();
+        PictureBox moveableObject;
         public Form1()
         {
             InitializeComponent();
+            AddEvents();
+        }
+
+        private void AddEvents()
+        {
             gameTimer.Tick += HandleTimerTick;
             this.KeyDown += HandleKeyDown;
             this.KeyUp += HandleKeyUp;
@@ -35,8 +41,18 @@ namespace KillAllNeighbors
         private void HandleTimerTick(object sender, EventArgs e)
         {
             _temp = ControlsHandler.Instance.GetVector();
-            pictureBox1.Location = new Point(pictureBox1.Location.X + _temp.x, pictureBox1.Location.Y + _temp.y);
+            TryMove();
+            this.AutoScrollPosition = moveableObject.Location;
+            Console.WriteLine(moveableObject.Location.ToString());
             EndMove();
+        }
+
+        private void TryMove()
+        {
+            if(moveableObject.Location.X + _temp.x >= Constants.MIN_BOUND_X && moveableObject.Location.Y + _temp.y >= Constants.MIN_BOUND_Y)
+            {
+                moveableObject.Location = new Point(moveableObject.Location.X + _temp.x, moveableObject.Location.Y + _temp.y);
+            }
         }
 
         private void EndMove()
@@ -54,6 +70,9 @@ namespace KillAllNeighbors
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.MinimumSize = new System.Drawing.Size(Constants.VIEW_SIZE_X, Constants.VIEW_SIZE_Y);
+            this.MaximumSize = this.MinimumSize;
+            moveableObject = pictureBox1;
 
         }
     }

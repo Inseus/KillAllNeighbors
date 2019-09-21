@@ -1,0 +1,19 @@
+Pirmiausia map'as:
+
+2000 x 2000 * zaideju skaicius
+dinaminis map'as
+
+pvz.: 4 zaidejai online, map'as 8000x8000
+mapas sumazeja, kai lieka 0 zaideju
+Bounds: (winformos apvercia Y coordinates)
+0,0			2000,0
++--------+
+|		 |
+|		 |
+|		 |
++--------+
+0,2000		2000,200
+Antra:
+
+viewport
+zaidejas matys 1400x700 ?

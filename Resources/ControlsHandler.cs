@@ -22,7 +22,6 @@ namespace KillAllNeighbors
         private static ControlsHandler instance = null;
         private static readonly object instanceLock = new object();
         private int speedMultiplier = 5;
-        //private int _keysVarNumbers = { (int)Key.W, (int)Key.A }; Continue here
         public static ControlsHandler Instance {
             get
             {
