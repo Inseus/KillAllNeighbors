@@ -71,7 +71,6 @@ namespace KillAllNeighbors
         private void Form1_Load(object sender, EventArgs e)
         {
             this.MinimumSize = new System.Drawing.Size(Constants.VIEW_SIZE_X, Constants.VIEW_SIZE_Y);
-            this.MaximumSize = this.MinimumSize;
             moveableObject = pictureBox1;
 
         }
