@@ -11,17 +11,13 @@ namespace KillAllNeighbors
 {
     interface IControls
     {
-        Vector2 RightUpwards();
-        Vector2 LeftUpwards();
-        Vector2 RightDownwards();
-        Vector2 LeftDownwards();
         Vector2 Upwards();
         Vector2 Downwards();
         Vector2 Right();
         Vector2 Left();
     }
 
-    public class ControlsHandler : Form1, IControls
+    public class ControlsHandler : IControls
     {
         private static ControlsHandler instance = null;
         private static readonly object instanceLock = new object();
@@ -57,40 +53,17 @@ namespace KillAllNeighbors
 
         private IEnumerable GetCoord()
         {
-            yield return RightUpwards();
-            yield return LeftUpwards();
-            yield return RightDownwards();
-            yield return LeftDownwards();
             yield return Upwards();
             yield return Downwards();
             yield return Right();
             yield return Left();
         }
 
-        public Vector2 RightUpwards()
-        {
-            return Keyboard.IsKeyDown(Key.D) && Keyboard.IsKeyDown(Key.W) ? new Vector2(1, -1) : zero;
-        }
-        public Vector2 LeftUpwards()
-        {
-            return Keyboard.IsKeyDown(Key.A) && Keyboard.IsKeyDown(Key.W) ? new Vector2(-1, -1) : zero;
-        }
-
-        public Vector2 RightDownwards()
-        {
-            return Keyboard.IsKeyDown(Key.D) && Keyboard.IsKeyDown(Key.S) ? new Vector2(1, 1) : zero;
-        }
-
-        public Vector2 LeftDownwards()
-        {
-            return Keyboard.IsKeyDown(Key.A) && Keyboard.IsKeyDown(Key.S) ? new Vector2(-1, 1) : zero;
-        }
-
         public Vector2 Upwards()
         {
             return Keyboard.IsKeyDown(Key.W) ? new Vector2(0, -1) : zero;
         }
-
+        
         public Vector2 Downwards()
         {
             return Keyboard.IsKeyDown(Key.S) ? new Vector2(0, 1) : zero;
@@ -108,11 +81,11 @@ namespace KillAllNeighbors
 
         public bool IsAnyKeyDown()
         {
-            if (!(Keyboard.IsKeyDown(Key.W) || Keyboard.IsKeyDown(Key.S) || Keyboard.IsKeyDown(Key.A) || Keyboard.IsKeyDown(Key.D)))
+            if (Keyboard.IsKeyDown(Key.W) || Keyboard.IsKeyDown(Key.S) || Keyboard.IsKeyDown(Key.A) || Keyboard.IsKeyDown(Key.D))
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         public int KeysDownCount()
@@ -121,13 +94,9 @@ namespace KillAllNeighbors
             int[] _keysVarNumbers = { 66, 44, 62, 47 };
             for (int i = 0; i < _keysVarNumbers.Length; i++)
             {
-
+                _count += Keyboard.IsKeyDown((Key)_keysVarNumbers[i]) ? 1 : 0;
             }
-            if (Keyboard.IsKeyDown(Key.W))
-            {
-                _count++;
-            }
-            
+            return _count;
         }
     }
 }

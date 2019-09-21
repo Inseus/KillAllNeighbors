@@ -8,3 +8,14 @@ C:\Users\Marius\Desktop\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.Gener
 C:\Users\Marius\Desktop\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.CoreCompileInputs.cache
 C:\Users\Marius\Desktop\KillAllNeighbors\obj\Debug\KillAllNeighbors.exe
 C:\Users\Marius\Desktop\KillAllNeighbors\obj\Debug\KillAllNeighbors.pdb
+C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\obj\Debug\KillAllNeighbors.csprojAssemblyReference.cache
+C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\obj\Debug\KillAllNeighbors.Form1.resources
+C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\obj\Debug\KillAllNeighbors.Properties.Resources.resources
+C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.GenerateResource.cache
+C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.CoreCompileInputs.cache
+C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\obj\Debug\KillAllNeighbors.exe
+C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\obj\Debug\KillAllNeighbors.pdb
+C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\bin\Debug\KillAllNeighbors.exe.config
+C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\bin\Debug\KillAllNeighbors.exe
+C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\bin\Debug\KillAllNeighbors.pdb
+C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\obj\Debug\KillAllNeighbors.ControlsHandler.resources
