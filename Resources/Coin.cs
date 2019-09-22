@@ -25,5 +25,10 @@ namespace KillAllNeighbors.Resources
         {
             return coin;
         }
+
+        public void SetNewColor(Color color)
+        {
+            coin.BackColor = color;
+        }
     }
 }
