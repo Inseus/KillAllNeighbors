@@ -14,28 +14,34 @@ namespace KillAllNeighbors.Resources
         private int currentCoins = 0;
         Random seed;
 
-        List<PictureBox> coinList = new List<PictureBox>();
+        List<Coin> coinList = new List<Coin>();
 
-        public CoinsController CoinSpawner
+        public CoinsController()
         {
+            seed = new Random();
+        }
 
-        }
-        public void coinSpawner(int maxCoins, int currentCoins)
+        public Coin SpawnNewCoin()
         {
-            if (currentCoins < maxCoins)
-                coinMaker();
-        }
-        void coinMaker()
-        {
-            var newCoin = new PictureBox
+            if(currentCoins <= maxCoins)
             {
-                Name = "pictureBox",
-                Size = new Size(18, 18),
-                Location = new Point(seed.Next(0, 1400), seed.Next(0, 700)),
-                BackColor = Color.Yellow,
-            };
-            coinList.Add(newCoin);
-                
+                Coin _tempCoin = new Coin(1, seed);
+                currentCoins++;
+                coinList.Add(_tempCoin);
+                return _tempCoin;
+            }
+            return null;
+        }
+
+        public List<Coin> GetCoinList()
+        {
+            return coinList;
+        }
+
+        public void RemoveCoin(Coin coin)
+        {
+            coinList.Remove(coin);
+            currentCoins--;
         }
     }
 }

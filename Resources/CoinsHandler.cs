@@ -33,15 +33,17 @@ namespace KillAllNeighbors.Resources
             coinsCount += number;
         }
 
-        public void TryCollectCoin(PictureBox moveableObject)
+        public Coin TryCollectCoin(PictureBox moveableObject, List<Coin> coinList)
         {
-            for (int i = 0; i < 0 /* CoinsController coinList */; i++)
+            for (int i = 0; i < coinList.Count; i++)
             {
-                if(IsIntersecting(/*coinList[i]*/, moveableObject))
+                if(IsIntersecting(coinList[i], moveableObject))
                 {
                     coinsCount += coinList[i].GetValue();
+                    return coinList[i];
                 }
             }
+            return null;
         }
 
         private bool IsIntersecting(Coin coin, PictureBox moveableObject)

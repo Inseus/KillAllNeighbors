@@ -17,11 +17,13 @@ namespace KillAllNeighbors
         Timer gameTimer = new Timer { Interval = 20};
         Vector2 _temp = new Vector2();
         PictureBox moveableObject;
+        CoinsController coinsController;
 
         public Form1()
         {
             InitializeComponent();
             AddEvents();
+            coinsController = new CoinsController();
         }
         //CoinsHandler coinFactory = new CoinsHandler(4);
 
@@ -49,17 +51,30 @@ namespace KillAllNeighbors
 
         private void HandleTimerTick(object sender, EventArgs e)
         {
-            CoinsHandler.Instance.TryCollectCoin(moveableObject);
-            _temp = ControlsHandler.Instance.GetVector();
+            ControlCoins();
             TryMove();
-            this.AutoScrollPosition = moveableObject.Location;
-            Console.WriteLine(moveableObject.Location.ToString());
             EndMove();
+        }
+
+        void ControlCoins()
+        {
+            Coin _spawnedCoin = coinsController.SpawnNewCoin();
+            if(_spawnedCoin != null)
+            {
+                this.Controls.Add(_spawnedCoin.GetPicture());
+            }
+            Coin _removedCoin = CoinsHandler.Instance.TryCollectCoin(moveableObject, coinsController.GetCoinList());
+            if (_removedCoin != null)
+            {
+                coinsController.RemoveCoin(_removedCoin);
+                this.Controls.Remove(_removedCoin.GetPicture());
+            }
         }
 
         private void TryMove()
         {
-            if(moveableObject.Location.X + _temp.x >= Constants.MIN_BOUND_X && moveableObject.Location.Y + _temp.y >= Constants.MIN_BOUND_Y)
+            _temp = ControlsHandler.Instance.GetVector();
+            if (moveableObject.Location.X + _temp.x >= Constants.MIN_BOUND_X && moveableObject.Location.Y + _temp.y >= Constants.MIN_BOUND_Y)
             {
                 moveableObject.Location = new Point(moveableObject.Location.X + _temp.x, moveableObject.Location.Y + _temp.y);
             }
@@ -82,7 +97,7 @@ namespace KillAllNeighbors
         {
             this.MinimumSize = new System.Drawing.Size(Constants.VIEW_SIZE_X, Constants.VIEW_SIZE_Y);
             moveableObject = pictureBox1;
-
+            this.AutoScrollPosition = moveableObject.Location;
         }
     }
 }
