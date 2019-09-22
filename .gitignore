@@ -3,5 +3,3 @@ obj/Debug/KillAllNeighbors.exe
 *.exe
 *.ide-shm
 *.ide-wal
-*.pdb
-*.cache
