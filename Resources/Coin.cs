@@ -20,5 +20,10 @@ namespace KillAllNeighbors.Resources
             coin.BackColor = Color.Yellow;
             coin.Location = new Point(seed.Next(0, Constants.VIEW_SIZE_X), seed.Next(0, Constants.VIEW_SIZE_Y));
         }
+
+        public PictureBox GetPicture()
+        {
+            return coin;
+        }
     }
 }
