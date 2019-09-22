@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KillAllNeighbors.Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,14 +17,23 @@ namespace KillAllNeighbors
         Timer gameTimer = new Timer { Interval = 20};
         Vector2 _temp = new Vector2();
         PictureBox moveableObject;
+
         public Form1()
         {
             InitializeComponent();
             AddEvents();
         }
+        CoincsHandler coinFactory = new CoincsHandler(4);
+
+
 
         private void AddEvents()
         {
+            foreach(var coin in coinFactory.getList())
+            {
+                this.Controls.Add(coin);
+            }
+         
             gameTimer.Tick += HandleTimerTick;
             this.KeyDown += HandleKeyDown;
             this.KeyUp += HandleKeyUp;
@@ -40,6 +50,14 @@ namespace KillAllNeighbors
 
         private void HandleTimerTick(object sender, EventArgs e)
         {
+            foreach (var item in coinFactory.getList())
+            {
+                if (item.Bounds.IntersectsWith(pictureBox1.Bounds)) {
+                    coinFactory.relocate(item);
+                    coinFactory.increaseCoincs();
+                    label1.Text = "Coins = " + coinFactory.getCoincs();
+                }
+            }
             _temp = ControlsHandler.Instance.GetVector();
             TryMove();
             this.AutoScrollPosition = moveableObject.Location;
