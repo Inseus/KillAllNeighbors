@@ -16,11 +16,14 @@ namespace KillAllNeighbors.Resources
         Random seed;
         public CoinsHandler(int numberOfCoincs)
         {
+            /*
             list = new List<PictureBox>();
             coins = 0;
             this.numberOfCoins = numberOfCoincs;
             seed = new Random();
             spawnCoins(numberOfCoincs);
+            */
+            //perkelt coinu spawninima i CoinController
         }
         void spawnCoins(int number)
         {
