@@ -6,26 +6,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 
-
-
-
 namespace KillAllNeighbors.Resources
 {
-    public class CoincsHandler
+    public class CoinsHandler
     {
         List<PictureBox> list;
-        int coincs;
-        int numberOfCoincs;
+        int coins;
+        int numberOfCoins;
         Random seed;
-        public CoincsHandler(int numberOfCoincs)
+        public CoinsHandler(int numberOfCoincs)
         {
             list = new List<PictureBox>();
-            coincs = 0;
-            this.numberOfCoincs = numberOfCoincs;
+            coins = 0;
+            this.numberOfCoins = numberOfCoincs;
             seed = new Random();
-            makeNumberOfCoincs(numberOfCoincs);
+            spawnCoins(numberOfCoincs);
         }
-        void makeNumberOfCoincs(int number)
+        void spawnCoins(int number)
         {
             for (int i = 0; i < number; i++)
             {
@@ -47,13 +44,13 @@ namespace KillAllNeighbors.Resources
         {
             return list;
         }
-        public void increaseCoincs()
+        public void increaseCoins()
         {
-            coincs++;
+            coins++;
         }
         public int getCoincs()
         {
-            return coincs;
+            return coins;
         }
         public void relocate(PictureBox model)
         {

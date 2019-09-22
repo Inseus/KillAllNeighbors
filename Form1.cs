@@ -23,9 +23,7 @@ namespace KillAllNeighbors
             InitializeComponent();
             AddEvents();
         }
-        CoincsHandler coinFactory = new CoincsHandler(4);
-
-
+        CoinsHandler coinFactory = new CoinsHandler(4);
 
         private void AddEvents()
         {
@@ -54,7 +52,7 @@ namespace KillAllNeighbors
             {
                 if (item.Bounds.IntersectsWith(pictureBox1.Bounds)) {
                     coinFactory.relocate(item);
-                    coinFactory.increaseCoincs();
+                    coinFactory.increaseCoins();
                     label1.Text = "Coins = " + coinFactory.getCoincs();
                 }
             }
