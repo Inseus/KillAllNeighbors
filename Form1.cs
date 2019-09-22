@@ -23,15 +23,16 @@ namespace KillAllNeighbors
             InitializeComponent();
             AddEvents();
         }
-        CoinsHandler coinFactory = new CoinsHandler(4);
+        //CoinsHandler coinFactory = new CoinsHandler(4);
 
         private void AddEvents()
         {
+            /*
             foreach(var coin in coinFactory.getList())
             {
                 this.Controls.Add(coin);
             }
-         
+            */
             gameTimer.Tick += HandleTimerTick;
             this.KeyDown += HandleKeyDown;
             this.KeyUp += HandleKeyUp;
@@ -48,14 +49,7 @@ namespace KillAllNeighbors
 
         private void HandleTimerTick(object sender, EventArgs e)
         {
-            foreach (var item in coinFactory.getList())
-            {
-                if (item.Bounds.IntersectsWith(pictureBox1.Bounds)) {
-                    coinFactory.relocate(item);
-                    coinFactory.increaseCoins();
-                    label1.Text = "Coins = " + coinFactory.getCoincs();
-                }
-            }
+            CoinsHandler.Instance.TryCollectCoin(moveableObject);
             _temp = ControlsHandler.Instance.GetVector();
             TryMove();
             this.AutoScrollPosition = moveableObject.Location;
