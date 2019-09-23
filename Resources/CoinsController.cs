@@ -10,11 +10,11 @@ namespace KillAllNeighbors.Resources
 {
     public class CoinsController
     {
-        private int maxCoins = 10;
+        private int maxCoins = 50;
         private int currentCoins = 0;
-        Random seed;
-
-        List<Coin> coinList = new List<Coin>();
+        private Random seed;
+        private Timer coinSpawnTimer = new Timer { Interval = 1000 }; //Every 1 sec
+        private List<Coin> coinList = new List<Coin>();
 
         public CoinsController()
         {
@@ -25,12 +25,12 @@ namespace KillAllNeighbors.Resources
         {
             if(currentCoins <= maxCoins)
             {
-                Coin _tempCoin = new Coin(1, seed);
-                currentCoins++;
-                coinList.Add(_tempCoin);
-                return _tempCoin;
+                return AddRandomCoin();
             }
-            return null;
+            else
+            {
+                return RemoveRandomCoin();
+            }
         }
 
         public List<Coin> GetCoinList()
@@ -42,6 +42,24 @@ namespace KillAllNeighbors.Resources
         {
             coinList.Remove(coin);
             currentCoins--;
+        }
+
+        private Coin AddRandomCoin()
+        {
+            Coin _tempCoin = new Coin(1, seed);
+            currentCoins++;
+            coinList.Add(_tempCoin);
+            return _tempCoin;
+        }
+
+        private Coin RemoveRandomCoin()
+        {
+            Random _randomCoinSeed = new Random();
+            int _takeIndex = _randomCoinSeed.Next(coinList.Count);
+            Coin _tempCoin = coinList[_takeIndex];
+            coinList.RemoveAt(_takeIndex);
+            currentCoins--;
+            return _tempCoin;
         }
     }
 }
