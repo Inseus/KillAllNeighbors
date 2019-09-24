@@ -8,6 +8,11 @@ using System.Drawing;
 
 namespace KillAllNeighbors.Resources
 {
+    /// <summary>
+    /// CoinsHandler handles existing coin data:
+    /// Adds to player coins
+    /// Removes from player coins
+    /// </summary>
     public class CoinsHandler
     {
         private int coinsCount = 0;
@@ -44,6 +49,11 @@ namespace KillAllNeighbors.Resources
                 }
             }
             return null;
+        }
+
+        public int GetCoinsCount()
+        {
+            return coinsCount;
         }
 
         private bool IsIntersecting(Coin coin, PictureBox moveableObject)

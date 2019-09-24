@@ -62,6 +62,7 @@ namespace KillAllNeighbors
             if(_spawnedCoin != null)
             {
                 this.Controls.Add(_spawnedCoin.GetPicture());
+                this.label1.Text = "Coins: " + CoinsHandler.Instance.GetCoinsCount().ToString();
             }
             Coin _removedCoin = CoinsHandler.Instance.TryCollectCoin(moveableObject, coinsController.GetCoinList());
             if (_removedCoin != null)

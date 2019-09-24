@@ -8,6 +8,10 @@ using System.Windows.Forms;
 
 namespace KillAllNeighbors.Resources
 {
+    /// <summary>
+    /// Basis coin class:
+    /// Can set value, color, size etc.
+    /// </summary>
     public class Coin
     {
         PictureBox coin = new PictureBox();
