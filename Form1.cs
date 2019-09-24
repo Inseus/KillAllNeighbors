@@ -14,61 +14,75 @@ namespace KillAllNeighbors
 {
     public partial class Form1 : Form
     {
-        Timer gameTimer = new Timer { Interval = 20};
-        Vector2 _temp = new Vector2();
-        PictureBox moveableObject;
-        CoinsController coinsController;
+        // Interval 1000 = 1 sekunde, kuo didesnis skaicius, tuo leciau viskas vyks
+        private Timer gameTimer;
+        private Timer moveTimer;
+        private Vector2 _temp = new Vector2();
+        private PictureBox moveableObject;
+        private CoinsController coinsController;
+        private static readonly object lockObject = new object();
+        private int coinSpawnInterval = 300;
+        private int moveInterval = 15;
+
+        delegate void AddOrRemoveToControl(Coin coin);
+        delegate void GetVector();
 
         public Form1()
         {
             InitializeComponent();
-            AddEvents();
-            coinsController = new CoinsController();
         }
-        //CoinsHandler coinFactory = new CoinsHandler(4);
 
         private void AddEvents()
         {
-            /*
-            foreach(var coin in coinFactory.getList())
-            {
-                this.Controls.Add(coin);
-            }
-            */
             gameTimer.Tick += HandleTimerTick;
-            this.KeyDown += HandleKeyDown;
-            this.KeyUp += HandleKeyUp;
+            moveTimer.Tick += HandleMoveTimerTick;
+            this.FormClosing += AppClose;
         }
 
-        private void HandleKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void HandleMoveTimerTick(object sender, EventArgs e)
         {
-            gameTimer.Start();
-        }
-
-        private void HandleKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
-        {
+            lock (lockObject)
+            {
+                TryMove();
+                TryCollectCoin();
+            }
         }
 
         private void HandleTimerTick(object sender, EventArgs e)
         {
-            ControlCoins();
-            TryMove();
-            EndMove();
+            Coin _spawnedCoin = coinsController.SpawnNewCoin();
+            ControlCoins(_spawnedCoin);
         }
 
-        void ControlCoins()
+        void ControlForm(Coin coin)
         {
-            Coin _spawnedCoin = coinsController.SpawnNewCoin();
-            if(_spawnedCoin != null)
+            if(coin == null)
+                return;
+            if (Controls.Contains(coin.GetFormControlItem()))
             {
-                this.Controls.Add(_spawnedCoin.GetPicture());
-                this.label1.Text = "Coins: " + CoinsHandler.Instance.GetCoinsCount().ToString();
+                Controls.Remove(coin.GetFormControlItem());
+                label1.Text = "Coins: " + CoinsHandler.Instance.GetCoinsCount();
+                return;
             }
-            Coin _removedCoin = CoinsHandler.Instance.TryCollectCoin(moveableObject, coinsController.GetCoinList());
-            if (_removedCoin != null)
+            else
             {
-                coinsController.RemoveCoin(_removedCoin);
-                this.Controls.Remove(_removedCoin.GetPicture());
+                Controls.Add(coin.GetFormControlItem());
+                return;
+            }
+        }
+
+        void ControlCoins(Coin tempCoin)
+        {
+            try
+            {
+                this.Invoke((AddOrRemoveToControl)delegate
+                {
+                    ControlForm(tempCoin);
+                }, tempCoin);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Thread was spawning elements on disposed object");
             }
         }
 
@@ -81,11 +95,13 @@ namespace KillAllNeighbors
             }
         }
 
-        private void EndMove()
+        private void TryCollectCoin()
         {
-            if (!ControlsHandler.Instance.IsAnyKeyDown())
+            Coin _temp = CoinsHandler.Instance.TryCollectCoin(moveableObject, coinsController.GetCoinList());
+            if (_temp != null)
             {
-                gameTimer.Stop();
+                coinsController.RemoveCoin(_temp);
+                ControlCoins(_temp);
             }
         }
 
@@ -96,9 +112,29 @@ namespace KillAllNeighbors
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.MinimumSize = new System.Drawing.Size(Constants.VIEW_SIZE_X, Constants.VIEW_SIZE_Y);
+            SetValues();
+            moveTimer.Start();
+            gameTimer.Start();
+            AddEvents();
+        }
+
+        private void SetValues()
+        {
+            this.MinimumSize = new Size(Constants.VIEW_SIZE_X, Constants.VIEW_SIZE_Y);
             moveableObject = pictureBox1;
             this.AutoScrollPosition = moveableObject.Location;
+            gameTimer = new Timer { Interval = coinSpawnInterval };
+            moveTimer = new Timer { Interval = moveInterval };
+            coinsController = new CoinsController();
+        }
+
+        private void AppClose(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            gameTimer.Enabled = false;
+            moveTimer.Enabled = false;
+            this.Dispose();
+            e.Cancel = false;
         }
     }
 }
