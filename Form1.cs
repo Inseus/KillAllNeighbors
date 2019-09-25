@@ -92,8 +92,10 @@ namespace KillAllNeighbors
             if (moveableObject.Location.X + _temp.x >= Constants.MIN_BOUND_X && moveableObject.Location.Y + _temp.y >= Constants.MIN_BOUND_Y)
             {
                 moveableObject.Location = new Point(moveableObject.Location.X + _temp.x, moveableObject.Location.Y + _temp.y);
+
             }
         }
+
 
         private void TryCollectCoin()
         {

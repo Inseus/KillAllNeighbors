@@ -41,3 +41,14 @@ C:\Users\User\Desktop\ktu\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.Gen
 C:\Users\User\Desktop\ktu\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.CoreCompileInputs.cache
 C:\Users\User\Desktop\ktu\KillAllNeighbors\obj\Debug\KillAllNeighbors.exe
 C:\Users\User\Desktop\ktu\KillAllNeighbors\obj\Debug\KillAllNeighbors.pdb
+C:\Users\Username\Documents\GitHub\KillAllNeighbors\obj\Debug\KillAllNeighbors.csprojAssemblyReference.cache
+C:\Users\Username\Documents\GitHub\KillAllNeighbors\obj\Debug\KillAllNeighbors.Form1.resources
+C:\Users\Username\Documents\GitHub\KillAllNeighbors\obj\Debug\KillAllNeighbors.Properties.Resources.resources
+C:\Users\Username\Documents\GitHub\KillAllNeighbors\obj\Debug\KillAllNeighbors.ControlsHandler.resources
+C:\Users\Username\Documents\GitHub\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.GenerateResource.cache
+C:\Users\Username\Documents\GitHub\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.CoreCompileInputs.cache
+C:\Users\Username\Documents\GitHub\KillAllNeighbors\obj\Debug\KillAllNeighbors.pdb
+C:\Users\Username\Documents\GitHub\KillAllNeighbors\bin\Debug\KillAllNeighbors.exe.config
+C:\Users\Username\Documents\GitHub\KillAllNeighbors\bin\Debug\KillAllNeighbors.exe
+C:\Users\Username\Documents\GitHub\KillAllNeighbors\bin\Debug\KillAllNeighbors.pdb
+C:\Users\Username\Documents\GitHub\KillAllNeighbors\obj\Debug\KillAllNeighbors.exe
