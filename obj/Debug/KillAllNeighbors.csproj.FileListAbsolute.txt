@@ -52,3 +52,23 @@ C:\Users\Username\Documents\GitHub\KillAllNeighbors\bin\Debug\KillAllNeighbors.e
 C:\Users\Username\Documents\GitHub\KillAllNeighbors\bin\Debug\KillAllNeighbors.exe
 C:\Users\Username\Documents\GitHub\KillAllNeighbors\bin\Debug\KillAllNeighbors.pdb
 C:\Users\Username\Documents\GitHub\KillAllNeighbors\obj\Debug\KillAllNeighbors.exe
+D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.csprojAssemblyReference.cache
+D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.Form1.resources
+D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.Properties.Resources.resources
+D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.ControlsHandler.resources
+D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.GenerateResource.cache
+D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.CoreCompileInputs.cache
+D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.exe
+D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.pdb
+D:\Github repository\KillAllNeighbors\bin\Debug\KillAllNeighbors.exe.config
+D:\Github repository\KillAllNeighbors\bin\Debug\KillAllNeighbors.exe.manifest
+D:\Github repository\KillAllNeighbors\bin\Debug\KillAllNeighbors.application
+D:\Github repository\KillAllNeighbors\bin\Debug\KillAllNeighbors.exe
+D:\Github repository\KillAllNeighbors\bin\Debug\KillAllNeighbors.pdb
+D:\Github repository\KillAllNeighbors\bin\Debug\Newtonsoft.Json.dll
+D:\Github repository\KillAllNeighbors\bin\Debug\System.Net.Http.Formatting.dll
+D:\Github repository\KillAllNeighbors\bin\Debug\Newtonsoft.Json.xml
+D:\Github repository\KillAllNeighbors\bin\Debug\System.Net.Http.Formatting.xml
+D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.exe.manifest
+D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.application
+D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.CopyComplete
