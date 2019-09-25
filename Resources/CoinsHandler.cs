@@ -52,11 +52,6 @@ namespace KillAllNeighbors.Resources
             return null;
         }
 
-        public int GetCoinsCount()
-        {
-            return coinsCount;
-        }
-
         private bool IsIntersecting(Coin coin, PictureBox moveableObject)
         {
             if (coin.GetFormControlItem().Bounds.IntersectsWith(moveableObject.Bounds))
