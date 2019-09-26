@@ -72,3 +72,12 @@ D:\Github repository\KillAllNeighbors\bin\Debug\System.Net.Http.Formatting.xml
 D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.exe.manifest
 D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.application
 D:\Github repository\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.CopyComplete
+C:\Users\User\Desktop\ktu\KillAllNeighbors\bin\Debug\KillAllNeighbors.exe.manifest
+C:\Users\User\Desktop\ktu\KillAllNeighbors\bin\Debug\KillAllNeighbors.application
+C:\Users\User\Desktop\ktu\KillAllNeighbors\bin\Debug\Newtonsoft.Json.dll
+C:\Users\User\Desktop\ktu\KillAllNeighbors\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\User\Desktop\ktu\KillAllNeighbors\bin\Debug\Newtonsoft.Json.xml
+C:\Users\User\Desktop\ktu\KillAllNeighbors\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\User\Desktop\ktu\KillAllNeighbors\obj\Debug\KillAllNeighbors.exe.manifest
+C:\Users\User\Desktop\ktu\KillAllNeighbors\obj\Debug\KillAllNeighbors.application
+C:\Users\User\Desktop\ktu\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.CopyComplete

@@ -17,6 +17,7 @@ namespace KillAllNeighbors
     public partial class Form1 : Form
     {
         // Interval 1000 = 1 sekunde, kuo didesnis skaicius, tuo leciau viskas vyks
+        private ConnectionHandler connectionHandler;
         private Timer gameTimer;
         private Timer moveTimer;
         private Vector2 _temp = new Vector2();
@@ -25,8 +26,6 @@ namespace KillAllNeighbors
         private static readonly object lockObject = new object();
         private int coinSpawnInterval = 300;
         private int moveInterval = 15;
-        HttpClient client = new HttpClient();
-        private Player thisPlayer;
 
         delegate void AddOrRemoveToControl(Coin coin);
         delegate void GetVector();
@@ -96,14 +95,9 @@ namespace KillAllNeighbors
             if (moveableObject.Location.X + _temp.x >= Constants.MIN_BOUND_X && moveableObject.Location.Y + _temp.y >= Constants.MIN_BOUND_Y)
             {
                 moveableObject.Location = new Point(moveableObject.Location.X + _temp.x, moveableObject.Location.Y + _temp.y);
-                thisPlayer.PosX = moveableObject.Location.X;
-                thisPlayer.PosY = moveableObject.Location.Y;
-
-                thisPlayer.coins = CoinsHandler.Instance.GetCoinsCount();
-                UpdatePlayerData();
+                connectionHandler.UpdatePlayerData();
             }
         }
-
 
         private void TryCollectCoin()
         {
@@ -136,29 +130,8 @@ namespace KillAllNeighbors
             gameTimer = new Timer { Interval = coinSpawnInterval };
             moveTimer = new Timer { Interval = moveInterval };
             coinsController = new CoinsController();
-            Connect();
+            connectionHandler = new ConnectionHandler();
         }
-
-        private async void Connect()
-        {
-            thisPlayer = new Player { name = "cbbbbb", score = 10, coins = 10, PosX = 0, PosY = 0, health = 100 };
-            var response = await client.PostAsJsonAsync("https://localhost:44381/api/player", thisPlayer);
-            if (response.IsSuccessStatusCode)
-            {
-                Uri gizmoURL = response.Headers.Location;
-                thisPlayer.id = JsonConvert.DeserializeObject<Player>(await response.Content.ReadAsStringAsync()).id;
-            }
-        }
-
-        private async void UpdatePlayerData()
-        {
-            var response = await client.PutAsJsonAsync("https://localhost:44381/api/player/" + thisPlayer.id, thisPlayer);
-            if (response.IsSuccessStatusCode)
-            {
-                Uri gizmoURL = response.Headers.Location;
-            }
-        }
-
 
         private void AppClose(object sender, FormClosingEventArgs e)
         {

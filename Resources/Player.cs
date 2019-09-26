@@ -23,7 +23,7 @@ namespace KillAllNeighbors.Resources
             coins = 0;
             score = 0;
             health = 100;
-            name = "AAAAAAAAAAA";
+            name = "DefaultName";
         }
 
         public void SetId(int _id)

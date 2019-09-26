@@ -37,6 +37,7 @@ namespace KillAllNeighbors.Resources
         {
             return coinsCount;
         }
+
         public void AddCoins(int number = 1)
         {
             coinsCount += number;
@@ -53,10 +54,6 @@ namespace KillAllNeighbors.Resources
                 }
             }
             return null;
-        }
-        public int GetCoinsCount()
-        {
-            return coinsCount;
         }
 
         private bool IsIntersecting(Coin coin, PictureBox moveableObject)
