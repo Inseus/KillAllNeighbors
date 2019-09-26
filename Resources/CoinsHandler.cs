@@ -33,7 +33,10 @@ namespace KillAllNeighbors.Resources
             }
         }
 
-
+        public int GetCoinsCount()
+        {
+            return coinsCount;
+        }
         public void AddCoins(int number = 1)
         {
             coinsCount += number;

@@ -8,16 +8,18 @@ namespace KillAllNeighbors.Resources
 {
     public class Player
     {
-        Vector2 currentCoord;
-        int coins;
-        int score;
-        float health;
-        int id;
-        string name;
+        public int coins { get; set; }
+        public int score { get; set; }
+        public float health { get; set; }
+        public long id { get; set; }
+        public string name { get; set; }
+        public long PosX { get; set; }
+        public long PosY { get; set; }
 
         public Player()
         {
-            currentCoord = new Vector2();
+            PosX = 0;
+            PosY = 0;
             coins = 0;
             score = 0;
             health = 100;

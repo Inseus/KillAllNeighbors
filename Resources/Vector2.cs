@@ -8,8 +8,9 @@ namespace KillAllNeighbors
 {
     public class Vector2
     {
-        public int x;
-        public int y;
+        public int x { get; set; }
+        public int y { get; set; }
+        public long Id { get; set; }
 
         public Vector2()
         {
@@ -30,10 +31,10 @@ namespace KillAllNeighbors
 
         public Vector2 One()
         {
-            return new Vector2(1,1);
+            return new Vector2(1, 1);
         }
 
-        public static Vector2 operator+ (Vector2 a, Vector2 b)
+        public static Vector2 operator +(Vector2 a, Vector2 b)
         {
             Vector2 _temp = new Vector2();
             _temp.x += a.x + b.x;
@@ -41,7 +42,7 @@ namespace KillAllNeighbors
             return _temp;
         }
 
-        public static Vector2 operator* (Vector2 a, int b)
+        public static Vector2 operator *(Vector2 a, int b)
         {
             Vector2 _temp = new Vector2();
             _temp.x += a.x * b;
