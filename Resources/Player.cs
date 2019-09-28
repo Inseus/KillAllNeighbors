@@ -26,7 +26,7 @@ namespace KillAllNeighbors.Resources
             name = "DefaultName";
         }
 
-        public void SetId(int _id)
+        public void SetId(long _id)
         {
             id = _id;
         }

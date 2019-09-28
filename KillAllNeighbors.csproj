@@ -94,8 +94,10 @@
     <Compile Include="Resources\Coin.cs" />
     <Compile Include="Resources\CoinsController.cs" />
     <Compile Include="Resources\CoinsHandler.cs" />
+    <Compile Include="Resources\ConnectionHandler.cs" />
     <Compile Include="Resources\Constants.cs" />
     <Compile Include="Resources\Player.cs" />
+    <Compile Include="Resources\PlayerWithObject.cs" />
     <Compile Include="Resources\Vector2.cs" />
     <Compile Include="Resources\ControlsHandler.cs" />
     <EmbeddedResource Include="Form1.resx">

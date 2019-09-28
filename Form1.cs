@@ -25,7 +25,7 @@ namespace KillAllNeighbors
         private CoinsController coinsController;
         private static readonly object lockObject = new object();
         private int coinSpawnInterval = 300;
-        private int moveInterval = 15;
+        private int moveInterval = 30;
 
         delegate void AddOrRemoveToControl(Coin coin);
         delegate void GetVector();
@@ -95,8 +95,9 @@ namespace KillAllNeighbors
             if (moveableObject.Location.X + _temp.x >= Constants.MIN_BOUND_X && moveableObject.Location.Y + _temp.y >= Constants.MIN_BOUND_Y)
             {
                 moveableObject.Location = new Point(moveableObject.Location.X + _temp.x, moveableObject.Location.Y + _temp.y);
-                connectionHandler.UpdatePlayerData();
+                connectionHandler.UpdatePlayerData(moveableObject.Location.X, moveableObject.Location.Y);
             }
+            connectionHandler.CreateAndUpdateIfNeeded(this);
         }
 
         private void TryCollectCoin()
