@@ -121,6 +121,15 @@ namespace KillAllNeighbors
             moveTimer.Start();
             gameTimer.Start();
             AddEvents();
+            todo();
+
+
+        }
+        public async void todo()
+        {
+            label2.Text = "Connecting...";
+            await connectionHandler.Connect();
+            label2.Text = "Connected...";
         }
 
         private void SetValues()

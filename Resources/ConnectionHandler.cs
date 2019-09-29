@@ -12,33 +12,43 @@ namespace KillAllNeighbors.Resources
 {
     public class ConnectionHandler
     {
-        private static readonly HttpClient client = new HttpClient();
+        private static readonly HttpClient client = new HttpClient(new HttpClientHandler
+        {
+            UseProxy = false
+        });
         private string playerDataURL = "https://localhost:44312/api/player";
-        private string coinsDataURL  = "https://localhost:44312/api/coins";
+        private string coinsDataURL = "https://localhost:44312/api/coins";
         public Player thisPlayer;
         public List<PlayerWithObject> playerWithObjectCollection;
+        private Boolean connectionEstablished = false;
 
         public ConnectionHandler()
         {
             thisPlayer = new Player();
             playerWithObjectCollection = new List<PlayerWithObject>();
-            Connect().Wait(10);
 
 
 
         }
 
-        private async Task Connect()
+
+        public async Task Connect()
         {
             HttpResponseMessage response = await client.PostAsJsonAsync(playerDataURL, thisPlayer);
             if (response.IsSuccessStatusCode)
             {
                 thisPlayer.SetId(JsonConvert.DeserializeObject<Player>(await response.Content.ReadAsStringAsync()).id);
+                connectionEstablished = true;
             }
+            Console.WriteLine("DD");
         }
 
         public async Task UpdatePlayerData(int x , int y)
         {
+            if(!connectionEstablished)
+            {
+                return;
+            }
             this.thisPlayer.PosX = x;
             this.thisPlayer.PosY = y;
             HttpResponseMessage response = await client.PutAsJsonAsync(playerDataURL + "/" + thisPlayer.id, thisPlayer);
@@ -51,6 +61,10 @@ namespace KillAllNeighbors.Resources
 
         private async Task<ICollection<Player>> GetAllPlayersData()
         {
+            if (!connectionEstablished)
+            {
+                return null;
+            }
             ICollection<Player> players = null;
             HttpResponseMessage response = await client.GetAsync(playerDataURL);
             if (response.IsSuccessStatusCode)
@@ -62,6 +76,10 @@ namespace KillAllNeighbors.Resources
         }
         public async Task CreateAndUpdateIfNeeded(Form form)
         {
+            if (!connectionEstablished)
+            {
+                return;
+            }
             ICollection<Player> playerCollection = await GetAllPlayersData();
             if (playerCollection == null)
             {
