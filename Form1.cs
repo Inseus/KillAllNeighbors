@@ -1,4 +1,5 @@
 ﻿using KillAllNeighbors.Resources;
+using KillAllNeighbors.Resources.Builder;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,12 +21,18 @@ namespace KillAllNeighbors
         private ConnectionHandler connectionHandler;
         private Timer gameTimer;
         private Timer moveTimer;
+        private Timer requestTimer;
         private Vector2 _temp = new Vector2();
-        private PictureBox moveableObject;
+        private PictureBox playerObject;
         private CoinsController coinsController;
         private static readonly object lockObject = new object();
         private int coinSpawnInterval = 300;
         private int moveInterval = 30;
+        private int requestInterval = 100;
+        public List<PlayerWithObject> enemyList;
+        public PlayerWithObject thisPlayer;
+        PictureBoxBuilder builder;
+        CreatorOfPictureBox creator;
 
         delegate void AddOrRemoveToControl(Coin coin);
         delegate void GetVector();
@@ -34,12 +41,61 @@ namespace KillAllNeighbors
         {
             InitializeComponent();
         }
+        public async void Connect()
+        {
+            await connectionHandler.Connect();
+        }
+        public async Task CreateEnemyAndUpdateEnemy()
+        {
+
+            ICollection<Player> playerCollection = await connectionHandler.GetAllPlayersData();
+            if (playerCollection == null)
+            {
+                return;
+            }
+
+            playerCollection = playerCollection.Where(player => player.id != this.thisPlayer.player.id).ToList();
+            // Surandam dar nesancius zaidejus ir pridedam
+            foreach (Player p in playerCollection)
+            {
+
+                if (enemyList.Find(x => x.player.id == p.id) == null)
+                {
+
+                    builder = new EnemyBoxBuilder();
+                    creator.Construct(builder);
+                    var box = builder.GetResult();
+
+                    this.Controls.Add(box);
+                    PlayerWithObject temp = new PlayerWithObject(box, p);
+                    enemyList.Add(temp);
+                }
+                else
+                {
+                    enemyList.Find(x => x.player.id == p.id).movableObject.Location = new Point((int)p.PosX, (int)p.PosY);
+
+                }
+
+            }
+
+        }
 
         private void AddEvents()
         {
             gameTimer.Tick += HandleTimerTick;
             moveTimer.Tick += HandleMoveTimerTick;
+            requestTimer.Tick += HandleRequestTick;
             this.FormClosing += AppClose;
+        }
+
+        private void HandleRequestTick(object sender, EventArgs e)
+        {
+            if (connectionHandler.connectionEstablished)
+            {
+                connectionHandler.UpdatePlayerData(playerObject.Location.X, playerObject.Location.Y);
+                CreateEnemyAndUpdateEnemy();
+            }
+
         }
 
         private void HandleMoveTimerTick(object sender, EventArgs e)
@@ -59,7 +115,7 @@ namespace KillAllNeighbors
 
         void ControlForm(Coin coin)
         {
-            if(coin == null)
+            if (coin == null)
                 return;
             if (Controls.Contains(coin.GetFormControlItem()))
             {
@@ -92,17 +148,15 @@ namespace KillAllNeighbors
         private void TryMove()
         {
             _temp = ControlsHandler.Instance.GetVector();
-            if (moveableObject.Location.X + _temp.x >= Constants.MIN_BOUND_X && moveableObject.Location.Y + _temp.y >= Constants.MIN_BOUND_Y)
+            if (playerObject.Location.X + _temp.x >= Constants.MIN_BOUND_X && playerObject.Location.Y + _temp.y >= Constants.MIN_BOUND_Y)
             {
-                moveableObject.Location = new Point(moveableObject.Location.X + _temp.x, moveableObject.Location.Y + _temp.y);
-                connectionHandler.UpdatePlayerData(moveableObject.Location.X, moveableObject.Location.Y);
+                playerObject.Location = new Point(playerObject.Location.X + _temp.x, playerObject.Location.Y + _temp.y);
             }
-            connectionHandler.CreateAndUpdateIfNeeded(this);
         }
 
         private void TryCollectCoin()
         {
-            Coin _temp = CoinsHandler.Instance.TryCollectCoin(moveableObject, coinsController.GetCoinList());
+            Coin _temp = CoinsHandler.Instance.TryCollectCoin(playerObject, coinsController.GetCoinList());
             if (_temp != null)
             {
                 coinsController.RemoveCoin(_temp);
@@ -121,26 +175,30 @@ namespace KillAllNeighbors
             moveTimer.Start();
             gameTimer.Start();
             AddEvents();
-            todo();
-
-
+            Connect();
+            requestTimer.Start();
         }
-        public async void todo()
-        {
-            label2.Text = "Connecting...";
-            await connectionHandler.Connect();
-            label2.Text = "Connected...";
-        }
+
 
         private void SetValues()
         {
+            // Sukuriama kurėją
+            creator = new CreatorOfPictureBox();
+            // Kurėjas sukuria įrankį skirtą konstruoti zaidėjo pictur boxa
+            builder = new PlayerBoxBuilder();
+            // Sukuriamas žaidėjo pictur boxas
+            creator.Construct(builder);
+            playerObject = builder.GetResult();
+            this.Controls.Add(playerObject);
+            thisPlayer = new PlayerWithObject(playerObject, new Player());
+            enemyList = new List<PlayerWithObject>();
             this.MinimumSize = new Size(Constants.VIEW_SIZE_X, Constants.VIEW_SIZE_Y);
-            moveableObject = pictureBox1;
-            this.AutoScrollPosition = moveableObject.Location;
+            this.AutoScrollPosition = playerObject.Location;
             gameTimer = new Timer { Interval = coinSpawnInterval };
             moveTimer = new Timer { Interval = moveInterval };
+            requestTimer = new Timer { Interval = requestInterval };
             coinsController = new CoinsController();
-            connectionHandler = new ConnectionHandler();
+            connectionHandler = new ConnectionHandler(thisPlayer.player);
         }
 
         private void AppClose(object sender, FormClosingEventArgs e)

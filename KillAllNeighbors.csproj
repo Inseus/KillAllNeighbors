@@ -91,6 +91,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Builder\ConcreteBuilder\EnemyBoxBuilder.cs" />
+    <Compile Include="Resources\Builder\ConcreteBuilder\PlayerBoxBuilder.cs" />
+    <Compile Include="Resources\Builder\CreatorOfPictureBox.cs" />
+    <Compile Include="Resources\Builder\PictureBoxBuilder.cs" />
     <Compile Include="Resources\Coin.cs" />
     <Compile Include="Resources\CoinsController.cs" />
     <Compile Include="Resources\CoinsHandler.cs" />
@@ -146,5 +150,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KillAllNeighbors.exe" size="120224">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KillAllNeighbors.exe" size="121248">
       <assemblyIdentity name="KillAllNeighbors" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>NsnW1ji/KXQLUwDzAT8TBtAUh3PqiZtmK54vDD6aTgk=</dsig:DigestValue>
+        <dsig:DigestValue>ymwcfHwsnXNyjtvIHAbBh/AAcr2H5kUw+dRU5DJtgYc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
