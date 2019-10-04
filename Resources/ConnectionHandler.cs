@@ -42,7 +42,8 @@ namespace KillAllNeighbors.Resources
 
         public async Task UpdatePlayerData(int x, int y)
         {
-
+            if(thisPlayer.PosX!=x || thisPlayer.PosX != y)
+            {
                 this.thisPlayer.PosX = x;
                 this.thisPlayer.PosY = y;
                 HttpResponseMessage response = await client.PutAsJsonAsync(playerDataURL + "/" + thisPlayer.id, thisPlayer);
@@ -50,7 +51,7 @@ namespace KillAllNeighbors.Resources
                 {
                     Uri gizmoURL = response.Headers.Location;
                 }
-
+            }              
             }
 
             public async Task<ICollection<Player>> GetAllPlayersData()

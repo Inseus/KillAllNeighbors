@@ -65,7 +65,6 @@ namespace KillAllNeighbors
                     builder = new EnemyBoxBuilder();
                     creator.Construct(builder);
                     var box = builder.GetResult();
-
                     this.Controls.Add(box);
                     PlayerWithObject temp = new PlayerWithObject(box, p);
                     enemyList.Add(temp);
