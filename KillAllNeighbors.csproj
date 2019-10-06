@@ -95,6 +95,7 @@
     <Compile Include="Resources\Builder\ConcreteBuilder\PlayerBoxBuilder.cs" />
     <Compile Include="Resources\Builder\CreatorOfPictureBox.cs" />
     <Compile Include="Resources\Builder\PictureBoxBuilder.cs" />
+    <Compile Include="Resources\Bullet.cs" />
     <Compile Include="Resources\Coin.cs" />
     <Compile Include="Resources\CoinsController.cs" />
     <Compile Include="Resources\CoinsHandler.cs" />

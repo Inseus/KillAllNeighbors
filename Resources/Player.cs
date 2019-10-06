@@ -15,7 +15,7 @@ namespace KillAllNeighbors.Resources
         public string name { get; set; }
         public long PosX { get; set; }
         public long PosY { get; set; }
-
+        public string facing { get; set; }
         public Player()
         {
             PosX = 0;
@@ -24,11 +24,32 @@ namespace KillAllNeighbors.Resources
             score = 0;
             health = 100;
             name = "DefaultName";
+            facing = "down";
         }
 
         public void SetId(long _id)
         {
             id = _id;
+        }
+        public void setDirectionUp()
+        {
+            facing = "up";
+        }
+        public void setDirectionDown()
+        {
+            facing = "down";
+        }
+        public void setDirectionLeft()
+        {
+            facing = "left";
+        }
+        public void setDirectioRight()
+        {
+            facing = "right";
+        }
+        public string getDirection()
+        {
+            return facing;
         }
     }
 }

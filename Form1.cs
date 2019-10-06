@@ -103,6 +103,7 @@ namespace KillAllNeighbors
             {
                 TryMove();
                 TryCollectCoin();
+                TryShoot();
             }
         }
 
@@ -149,6 +150,7 @@ namespace KillAllNeighbors
             _temp = ControlsHandler.Instance.GetVector();
             if (playerObject.Location.X + _temp.x >= Constants.MIN_BOUND_X && playerObject.Location.Y + _temp.y >= Constants.MIN_BOUND_Y)
             {
+
                 playerObject.Location = new Point(playerObject.Location.X + _temp.x, playerObject.Location.Y + _temp.y);
             }
         }
@@ -161,6 +163,22 @@ namespace KillAllNeighbors
                 coinsController.RemoveCoin(_temp);
                 ControlCoins(_temp);
             }
+        }
+        private void TryShoot()
+        {
+
+            // this is the function thats makes the new bullets in this game
+            Boolean isShooting = ControlsHandler.Instance.Shoot();
+            string direction = ControlsHandler.Instance.GetDirection();
+            if (isShooting)
+            {
+                Bullet shoot = new Bullet(); // create a new instance of the bullet class
+                shoot.direction = direction; // assignment the direction to the bullet
+                shoot.bulletLeft = playerObject.Left + (playerObject.Width / 2); // place the bullet to left half of the player
+                shoot.bulletTop = playerObject.Top + (playerObject.Height / 2); // place the bullet on top half of the player
+                shoot.mkBullet(this); // run the function mkBullet from the bullet class. 
+            }
+            
         }
 
         private void PictureBox1_Click(object sender, EventArgs e)
@@ -176,8 +194,8 @@ namespace KillAllNeighbors
             AddEvents();
             Connect();
             requestTimer.Start();
+            
         }
-
 
         private void SetValues()
         {

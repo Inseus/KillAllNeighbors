@@ -49,5 +49,21 @@ namespace KillAllNeighbors
             _temp.y += a.y * b;
             return _temp;
         }
+        public Vector2 Up()
+        {
+            return new Vector2(0, -1);
+        }
+        public Vector2 Down()
+        {
+            return new Vector2(0, 1);
+        }
+        public Vector2 Right()
+        {
+            return new Vector2(1, 0);
+        }
+        public Vector2 Left()
+        {
+            return new Vector2(-1, 0);
+        }
     }
 }

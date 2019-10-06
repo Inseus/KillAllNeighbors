@@ -22,6 +22,7 @@ namespace KillAllNeighbors
         private static ControlsHandler instance = null;
         private static readonly object instanceLock = new object();
         private int speedMultiplier = 5;
+        private string lastDirection = "up";
         public static ControlsHandler Instance {
             get
             {
@@ -57,7 +58,23 @@ namespace KillAllNeighbors
             yield return Right();
             yield return Left();
         }
+        public string GetDirection()
+        {
+            if (Upwards() != zero)
+                lastDirection = "up";
 
+            if (Downwards() != zero)
+                lastDirection = "down";
+            if (Right() != zero)
+                lastDirection = "right";
+            if (Left() != zero)
+                lastDirection = "left";
+            return lastDirection;
+        }
+        public Boolean Shoot()
+        {
+            return Keyboard.IsKeyDown(Key.NumPad1) ? true : false;
+        }
         public Vector2 Upwards()
         {
             return Keyboard.IsKeyDown(Key.W) ? new Vector2(0, -1) : zero;

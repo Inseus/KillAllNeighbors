@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KillAllNeighbors.exe" size="121248">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KillAllNeighbors.exe" size="123296">
       <assemblyIdentity name="KillAllNeighbors" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2JIFOhG9gbH1Pp0o01irOTbINlzFDwapc3vBvmZPIF8=</dsig:DigestValue>
+        <dsig:DigestValue>kzX3jxxt8Z4P8UaTQZGRMDmAHKLwiyyTSX2mQtw2Agc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -77,13 +77,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="KillAllNeighbors.exe.config" size="184">
+  <file name="KillAllNeighbors.exe.config" size="189">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>X+GtgC9o18R9u9jmAWK6iKuu0WLaXTgchdPkk1MRli4=</dsig:DigestValue>
+      <dsig:DigestValue>R+Wg8QGvQVHX8T0ta/qbhH1bXkqY0fRnS3wBV3J0bN8=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>
