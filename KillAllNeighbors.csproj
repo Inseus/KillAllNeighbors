@@ -103,6 +103,10 @@
     <Compile Include="Resources\Constants.cs" />
     <Compile Include="Resources\Player.cs" />
     <Compile Include="Resources\PlayerWithObject.cs" />
+    <Compile Include="Resources\Strategy\Implementation\Machinegun.cs" />
+    <Compile Include="Resources\Strategy\Implementation\Pistol.cs" />
+    <Compile Include="Resources\Strategy\Implementation\Sniper.cs" />
+    <Compile Include="Resources\Strategy\ShootAlgorithm.cs" />
     <Compile Include="Resources\Vector2.cs" />
     <Compile Include="Resources\ControlsHandler.cs" />
     <EmbeddedResource Include="Form1.resx">

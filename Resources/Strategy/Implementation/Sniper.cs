@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace KillAllNeighbors.Resources.Strategy.Implementation
 {
-    class Sniper
+    class Sniper : ShootAlgorithm
     {
+        public bool Shoot()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
