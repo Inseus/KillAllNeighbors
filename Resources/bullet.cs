@@ -29,7 +29,7 @@ namespace KillAllNeighbors.Resources
 
             bullet.BackColor = System.Drawing.Color.White; // set the colour white for the bullet
             bullet.Size = new Size(5, 5); // set the size to the bullet to 5 pixel by 5 pixel
-            bullet.Tag = "bullet"; // set the tag to bullet
+            bullet.Name = "bullet"; // set the tag to bullet
             bullet.Left = bulletLeft; // set bullet left 
             bullet.Top = bulletTop; // set bullet right
             bullet.BringToFront(); // bring the bullet to front of other objects

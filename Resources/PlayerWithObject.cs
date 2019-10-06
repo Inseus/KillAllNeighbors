@@ -20,6 +20,17 @@ namespace KillAllNeighbors.Resources
             this.player = player;
         }
 
+        public void hit()
+        {
+            player.health = player.health - 20;
+        }
+        public bool isAlive()
+        {
+            if (player.health < 0)
+                return false;
+            return true;
+
+        }
     }
 }
 

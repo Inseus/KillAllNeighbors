@@ -22,7 +22,7 @@ namespace KillAllNeighbors.Resources.Builder
 
         public override void BuildName()
         {
-            box.Name = "pictureBoxPlayer";
+            box.Name = "player";
         }
 
 

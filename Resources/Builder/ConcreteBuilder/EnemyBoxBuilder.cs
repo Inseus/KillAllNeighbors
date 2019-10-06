@@ -23,7 +23,7 @@ namespace KillAllNeighbors.Resources.Builder
 
         public override void BuildName()
         {
-            box.Name = "pictureBoxEnemy";
+            box.Name = "enemy";
         }
 
 
@@ -43,5 +43,6 @@ namespace KillAllNeighbors.Resources.Builder
         {
             box.Size = new Size(20, 20);
         }
+
     }
 }

@@ -104,6 +104,7 @@ namespace KillAllNeighbors
                 TryMove();
                 TryCollectCoin();
                 TryShoot();
+                Collisions();
             }
         }
 
@@ -121,6 +122,7 @@ namespace KillAllNeighbors
             {
                 Controls.Remove(coin.GetFormControlItem());
                 label1.Text = "Coins: " + CoinsHandler.Instance.GetCoinsCount();
+                thisPlayer.player.coins = CoinsHandler.Instance.GetCoinsCount();
                 return;
             }
             else
@@ -195,6 +197,38 @@ namespace KillAllNeighbors
             Connect();
             requestTimer.Start();
             
+        }
+        private void Collisions()
+        {
+            // run the first for each loop below
+            // X is a control and we will search for all controls in this loop
+            foreach (PlayerWithObject x in enemyList)
+            {
+                // below is the second for loop, this is nexted inside the first one
+                // the bullet and zombie needs to be different than each other
+                // then we can use that to determine if the hit each other
+                foreach (Control j in this.Controls)
+                {
+                    // below is the selection thats identifying the bullet and zombie
+
+                    if ((j is PictureBox && j.Name == "bullet") && (x.movableObject is PictureBox && x.movableObject.Name == "enemy"))
+                    {
+                        // below is the if statement thats checking if bullet hits the zombie
+                        if (x.movableObject.Bounds.IntersectsWith(j.Bounds))
+                        {
+                            this.Controls.Remove(j); // this will remove the bullet from the screen
+                            j.Dispose(); // this will dispose the bullet all together from the program
+                            //x.hit();
+                            //if(!x.isAlive())
+                            //{
+                            //    this.Controls.Remove(x.movableObject); // this will remove the zombie from the screen
+                            //    x.movableObject.Dispose(); // this will dispose the zombie from the program
+                            //}
+
+                        }
+                    }
+                }
+            }
         }
 
         private void SetValues()
