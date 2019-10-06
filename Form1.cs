@@ -1,5 +1,6 @@
 ﻿using KillAllNeighbors.Resources;
 using KillAllNeighbors.Resources.Builder;
+using KillAllNeighbors.Resources.Strategy;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -170,16 +171,16 @@ namespace KillAllNeighbors
         {
 
             // this is the function thats makes the new bullets in this game
-            Boolean isShooting = ControlsHandler.Instance.Shoot();
-            string direction = ControlsHandler.Instance.GetDirection();
-            if (isShooting)
+            Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon();
+            if(typeOfBullet!=null)
             {
-                Bullet shoot = new Bullet(); // create a new instance of the bullet class
-                shoot.direction = direction; // assignment the direction to the bullet
-                shoot.bulletLeft = playerObject.Left + (playerObject.Width / 2); // place the bullet to left half of the player
-                shoot.bulletTop = playerObject.Top + (playerObject.Height / 2); // place the bullet on top half of the player
-                shoot.mkBullet(this); // run the function mkBullet from the bullet class. 
+                string direction = ControlsHandler.Instance.GetDirection();
+                typeOfBullet.direction = direction; // assignment the direction to the bullet
+                typeOfBullet.bulletLeft = playerObject.Left + (playerObject.Width / 2); // place the bullet to left half of the player
+                typeOfBullet.bulletTop = playerObject.Top + (playerObject.Height / 2); // place the bullet on top half of the player
+                typeOfBullet.mkBullet(this); // run the function mkBullet from the bullet class. 
             }
+            
             
         }
 

@@ -8,9 +8,9 @@ namespace KillAllNeighbors.Resources.Strategy.Implementation
 {
     class Pistol : ShootAlgorithm
     {
-        public bool Shoot()
+        public override Bullet Shoot()
         {
-            return Keyboard.IsKeyDown(Key.NumPad1) ? true : false;
+            return new Bullet(60);
         }
     }
 }

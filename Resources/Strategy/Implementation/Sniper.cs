@@ -8,9 +8,9 @@ namespace KillAllNeighbors.Resources.Strategy.Implementation
 {
     class Sniper : ShootAlgorithm
     {
-        public bool Shoot()
+        public override Bullet Shoot()
         {
-            throw new NotImplementedException();
+            return new Bullet(80);
         }
     }
 }

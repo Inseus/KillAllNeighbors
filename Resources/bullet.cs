@@ -7,34 +7,40 @@ using System.Windows.Forms;
 
 namespace KillAllNeighbors.Resources
 {
-    class Bullet
+    public class Bullet
     {
 
         // start the variable
 
         public string direction; // creating a public string called direction
         public int speed = 20; // creating a integer called speed and assigning a value of 20
-        PictureBox bullet = new PictureBox(); // create a picture box 
+        public PictureBox bullet = new PictureBox(); // create a picture box 
         Timer tm = new Timer(); // create a new timer called tm. 
 
         public int bulletLeft; // create a new public integer
         public int bulletTop; // create a new public integer
 
         // end of the variables
+        public Bullet(int speed)
+        {
+            this.speed = speed;
 
+       
+            
+
+
+        }
         public void mkBullet(Form form)
         {
             // this function will add the bullet to the game play
-            // it is required to be called from the main class
-
-            bullet.BackColor = System.Drawing.Color.White; // set the colour white for the bullet
+            // it is required to be called from the main class  
+            bullet.BackColor = System.Drawing.Color.Black; // set the colour white for the bullet
             bullet.Size = new Size(5, 5); // set the size to the bullet to 5 pixel by 5 pixel
             bullet.Name = "bullet"; // set the tag to bullet
             bullet.Left = bulletLeft; // set bullet left 
             bullet.Top = bulletTop; // set bullet right
             bullet.BringToFront(); // bring the bullet to front of other objects
             form.Controls.Add(bullet); // add the bullet to the screen
-
             tm.Interval = speed; // set the timer interval to speed
             tm.Tick += new EventHandler(tm_Tick); // assignment the timer with an event
             tm.Start(); // start the timer

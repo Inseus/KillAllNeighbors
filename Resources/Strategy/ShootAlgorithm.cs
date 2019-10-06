@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace KillAllNeighbors.Resources.Strategy
 {
-    interface ShootAlgorithm
+    abstract class ShootAlgorithm
     {
-        bool Shoot()
+        public abstract Bullet Shoot();
     }
 }

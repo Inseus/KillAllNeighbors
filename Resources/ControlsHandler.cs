@@ -1,4 +1,7 @@
-﻿using System;
+﻿using KillAllNeighbors.Resources;
+using KillAllNeighbors.Resources.Strategy;
+using KillAllNeighbors.Resources.Strategy.Implementation;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +26,7 @@ namespace KillAllNeighbors
         private static readonly object instanceLock = new object();
         private int speedMultiplier = 5;
         private string lastDirection = "up";
+        private Context context; 
         public static ControlsHandler Instance {
             get
             {
@@ -71,9 +75,26 @@ namespace KillAllNeighbors
                 lastDirection = "left";
             return lastDirection;
         }
-        public Boolean Shoot()
+        public Bullet GetWeapon()
         {
-            return Keyboard.IsKeyDown(Key.NumPad1) ? true : false;
+
+            if (Keyboard.IsKeyDown(Key.NumPad1))
+            {
+                context = new Context(new Pistol());
+                return context.ContextInterface();
+            }
+            if (Keyboard.IsKeyDown(Key.NumPad2))
+            {
+                context = new Context(new Machinegun());
+                return context.ContextInterface();
+            }
+            if (Keyboard.IsKeyDown(Key.NumPad3))
+            {
+                context = new Context(new Sniper());
+                return context.ContextInterface();
+                
+            }
+            return null;
         }
         public Vector2 Upwards()
         {
