@@ -104,11 +104,47 @@ namespace KillAllNeighbors
             {
                 TryMove();
                 TryCollectCoin();
-                TryShoot();
+                //TryShoot();
                 Collisions();
             }
         }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
 
+            if (Keyboard.IsKeyDown(Key.NumPad1) || Keyboard.IsKeyDown(Key.NumPad2) || Keyboard.IsKeyDown(Key.NumPad3))
+            {
+                this.Controls.Add(playerObject);
+                // this is the function thats makes the new bullets in this game
+                Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon(creator);
+                if (typeOfBullet != null)
+                {
+                    string direction = ControlsHandler.Instance.GetDirection();
+                    typeOfBullet.direction = direction; // assignment the direction to the bullet
+                    typeOfBullet.bulletLeft = playerObject.Left + (playerObject.Width / 2); // place the bullet to left half of the player
+                    typeOfBullet.bulletTop = playerObject.Top + (playerObject.Height / 2); // place the bullet on top half of the player
+                    typeOfBullet.mkBullet(this); // run the function mkBullet from the bullet class. 
+                }
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+        //private void TryShoot()
+        //{
+
+        //    this.Controls.Add(playerObject);
+        //    // this is the function thats makes the new bullets in this game
+        //    Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon(creator);
+        //    if (typeOfBullet != null)
+        //    {
+        //        string direction = ControlsHandler.Instance.GetDirection();
+        //        typeOfBullet.direction = direction; // assignment the direction to the bullet
+        //        typeOfBullet.bulletLeft = playerObject.Left + (playerObject.Width / 2); // place the bullet to left half of the player
+        //        typeOfBullet.bulletTop = playerObject.Top + (playerObject.Height / 2); // place the bullet on top half of the player
+        //        typeOfBullet.mkBullet(this); // run the function mkBullet from the bullet class. 
+        //    }
+
+
+        //}
         private void HandleTimerTick(object sender, EventArgs e)
         {
             Coin _spawnedCoin = coinsController.SpawnNewCoin();
@@ -167,23 +203,7 @@ namespace KillAllNeighbors
                 ControlCoins(_temp);
             }
         }
-        private void TryShoot()
-        {
 
-            this.Controls.Add(playerObject);
-            // this is the function thats makes the new bullets in this game
-            Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon(creator);
-            if(typeOfBullet!=null)
-            {
-                string direction = ControlsHandler.Instance.GetDirection();
-                typeOfBullet.direction = direction; // assignment the direction to the bullet
-                typeOfBullet.bulletLeft = playerObject.Left + (playerObject.Width / 2); // place the bullet to left half of the player
-                typeOfBullet.bulletTop = playerObject.Top + (playerObject.Height / 2); // place the bullet on top half of the player
-                typeOfBullet.mkBullet(this); // run the function mkBullet from the bullet class. 
-            }
-            
-            
-        }
 
         private void PictureBox1_Click(object sender, EventArgs e)
         {
