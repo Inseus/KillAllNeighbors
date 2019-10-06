@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KillAllNeighbors.Resources.Builder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KillAllNeighbors.Resources.Strategy
 {
-    class Context
+    public class Context
     {
         private ShootAlgorithm _strategy;
 
@@ -17,9 +18,9 @@ namespace KillAllNeighbors.Resources.Strategy
             this._strategy = strategy;
         }
 
-        public Bullet ContextInterface()
+        public Bullet ContextInterface(CreatorOfPictureBox creator)
         {
-            return _strategy.Shoot();
+            return _strategy.Shoot(creator);
         }
     }
 }

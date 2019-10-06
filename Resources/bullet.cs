@@ -14,19 +14,19 @@ namespace KillAllNeighbors.Resources
 
         public string direction; // creating a public string called direction
         public int speed = 20; // creating a integer called speed and assigning a value of 20
-        public PictureBox bullet = new PictureBox(); // create a picture box 
-        Timer tm = new Timer(); // create a new timer called tm. 
+        PictureBox bullet; // create a picture box 
+        Timer tm = new Timer(); // create a new timer called tm.
+        
 
         public int bulletLeft; // create a new public integer
         public int bulletTop; // create a new public integer
 
         // end of the variables
-        public Bullet(int speed)
+        public Bullet(int speed, PictureBox box)
         {
             this.speed = speed;
+            bullet = box;
 
-       
-            
 
 
         }
@@ -34,9 +34,6 @@ namespace KillAllNeighbors.Resources
         {
             // this function will add the bullet to the game play
             // it is required to be called from the main class  
-            bullet.BackColor = System.Drawing.Color.Black; // set the colour white for the bullet
-            bullet.Size = new Size(5, 5); // set the size to the bullet to 5 pixel by 5 pixel
-            bullet.Name = "bullet"; // set the tag to bullet
             bullet.Left = bulletLeft; // set bullet left 
             bullet.Top = bulletTop; // set bullet right
             bullet.BringToFront(); // bring the bullet to front of other objects

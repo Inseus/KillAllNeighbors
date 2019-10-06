@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KillAllNeighbors.Resources.Builder
 {
-    class CreatorOfPictureBox
+    public class CreatorOfPictureBox
     {
         public void Construct(PictureBoxBuilder builder)
         {
@@ -14,6 +14,12 @@ namespace KillAllNeighbors.Resources.Builder
             builder.BuildName();
             builder.BuildPictureColor();
             builder.BuildPictureImage();
+            builder.BuildPictureSize();
+        }
+        public void ConstructMinimal(PictureBoxBuilder builder)
+        {
+            builder.BuildName();
+            builder.BuildPictureColor();
             builder.BuildPictureSize();
         }
     }

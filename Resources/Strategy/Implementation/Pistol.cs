@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KillAllNeighbors.Resources.Builder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,17 @@ namespace KillAllNeighbors.Resources.Strategy.Implementation
 {
     class Pistol : ShootAlgorithm
     {
-        public override Bullet Shoot()
+        PictureBoxBuilder builder;
+
+        public override Bullet Shoot(CreatorOfPictureBox creator)
         {
-            return new Bullet(60);
+            // Sukuriama kurėją
+            creator = new CreatorOfPictureBox();
+            // Kurėjas sukuria įrankį skirtą konstruoti zaidėjo pictur boxa
+            builder = new PistolBullet();
+            // Sukuriamas žaidėjo pictur boxas
+            creator.ConstructMinimal(builder);
+            return new Bullet(60, builder.GetResult());
         }
     }
 }

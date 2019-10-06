@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace KillAllNeighbors.Resources.Builder
 {
-    abstract class PictureBoxBuilder
+    public abstract class PictureBoxBuilder
     {
         public abstract void BuildName();
         public abstract void BuildPictureImage();

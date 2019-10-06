@@ -170,8 +170,9 @@ namespace KillAllNeighbors
         private void TryShoot()
         {
 
+            this.Controls.Add(playerObject);
             // this is the function thats makes the new bullets in this game
-            Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon();
+            Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon(creator);
             if(typeOfBullet!=null)
             {
                 string direction = ControlsHandler.Instance.GetDirection();

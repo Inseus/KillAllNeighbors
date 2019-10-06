@@ -1,4 +1,5 @@
 ﻿using KillAllNeighbors.Resources;
+using KillAllNeighbors.Resources.Builder;
 using KillAllNeighbors.Resources.Strategy;
 using KillAllNeighbors.Resources.Strategy.Implementation;
 using System;
@@ -27,6 +28,7 @@ namespace KillAllNeighbors
         private int speedMultiplier = 5;
         private string lastDirection = "up";
         private Context context; 
+        private CreatorOfPictureBox creator;
         public static ControlsHandler Instance {
             get
             {
@@ -42,6 +44,7 @@ namespace KillAllNeighbors
         private Vector2 zero;
         public ControlsHandler()
         {
+
             zero = new Vector2(0, 0);
         }
 
@@ -75,23 +78,23 @@ namespace KillAllNeighbors
                 lastDirection = "left";
             return lastDirection;
         }
-        public Bullet GetWeapon()
+        public Bullet GetWeapon(CreatorOfPictureBox creator)
         {
 
             if (Keyboard.IsKeyDown(Key.NumPad1))
             {
                 context = new Context(new Pistol());
-                return context.ContextInterface();
+                return context.ContextInterface(creator);
             }
             if (Keyboard.IsKeyDown(Key.NumPad2))
             {
                 context = new Context(new Machinegun());
-                return context.ContextInterface();
+                return context.ContextInterface(creator);
             }
             if (Keyboard.IsKeyDown(Key.NumPad3))
             {
                 context = new Context(new Sniper());
-                return context.ContextInterface();
+                return context.ContextInterface(creator);
                 
             }
             return null;
