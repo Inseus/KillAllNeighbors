@@ -16,7 +16,7 @@ namespace KillAllNeighbors.Resources.Strategy.Implementation
             // Sukuriama kurėją
             creator = new CreatorOfPictureBox();
             // Kurėjas sukuria įrankį skirtą konstruoti zaidėjo pictur boxa
-            builder = new PistolBullet();
+            builder = new PistolBulletBuilder();
             // Sukuriamas žaidėjo pictur boxas
             creator.ConstructMinimal(builder);
             return new Bullet(60, builder.GetResult());

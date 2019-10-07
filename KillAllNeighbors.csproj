@@ -91,10 +91,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Builder\ConcreteBuilder\PistolBullet.cs" />
-    <Compile Include="Resources\Builder\ConcreteBuilder\SniperBullet.cs" />
+    <Compile Include="Resources\Builder\ConcreteBuilder\PistolBulletBuilder.cs" />
+    <Compile Include="Resources\Builder\ConcreteBuilder\SniperBulletBuilder.cs" />
     <Compile Include="Resources\Builder\ConcreteBuilder\EnemyBoxBuilder.cs" />
-    <Compile Include="Resources\Builder\ConcreteBuilder\BulletBuilder.cs" />
+    <Compile Include="Resources\Builder\ConcreteBuilder\SmallBulletBuilder.cs" />
     <Compile Include="Resources\Builder\ConcreteBuilder\PlayerBoxBuilder.cs" />
     <Compile Include="Resources\Builder\CreatorOfPictureBox.cs" />
     <Compile Include="Resources\Builder\PictureBoxBuilder.cs" />

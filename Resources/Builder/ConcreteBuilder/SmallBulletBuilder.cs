@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace KillAllNeighbors.Resources.Builder
 {
-    class SniperBullet : PictureBoxBuilder
+    class SmallBulletBuilder : PictureBoxBuilder
     {
         private PictureBox box = new PictureBox();
         public override PictureBox GetResult()
@@ -37,7 +37,7 @@ namespace KillAllNeighbors.Resources.Builder
 
         public override void BuildPictureSize()
         {
-            box.Size= new Size(10, 10);
+            box.Size= new Size(3, 3);
         }
 
         public override void BuildLocation()
