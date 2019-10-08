@@ -113,7 +113,7 @@ namespace KillAllNeighbors
         }
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-
+            string direction = ControlsHandler.Instance.GetDirection();
             if (Keyboard.IsKeyDown(Key.NumPad1) || Keyboard.IsKeyDown(Key.NumPad2) || Keyboard.IsKeyDown(Key.NumPad3))
             {
                 this.Controls.Add(playerObject);
@@ -121,7 +121,7 @@ namespace KillAllNeighbors
                 Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon(creator);
                 if (typeOfBullet != null)
                 {
-                    string direction = ControlsHandler.Instance.GetDirection();
+                    
                     typeOfBullet.direction = direction; // assignment the direction to the bullet
                     typeOfBullet.bulletLeft = playerObject.Left + (playerObject.Width / 2); // place the bullet to left half of the player
                     typeOfBullet.bulletTop = playerObject.Top + (playerObject.Height / 2); // place the bullet on top half of the player
@@ -135,11 +135,11 @@ namespace KillAllNeighbors
         //{
 
         //    this.Controls.Add(playerObject);
+        //        string direction = ControlsHandler.Instance.GetDirection();
         //    // this is the function thats makes the new bullets in this game
         //    Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon(creator);
         //    if (typeOfBullet != null)
         //    {
-        //        string direction = ControlsHandler.Instance.GetDirection();
         //        typeOfBullet.direction = direction; // assignment the direction to the bullet
         //        typeOfBullet.bulletLeft = playerObject.Left + (playerObject.Width / 2); // place the bullet to left half of the player
         //        typeOfBullet.bulletTop = playerObject.Top + (playerObject.Height / 2); // place the bullet on top half of the player
