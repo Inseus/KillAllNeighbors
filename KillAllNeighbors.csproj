@@ -101,6 +101,7 @@
     <Compile Include="Resources\Bullet.cs" />
     <Compile Include="Resources\Coin.cs" />
     <Compile Include="Resources\CoinsController.cs" />
+    <Compile Include="Resources\CoinsFactory.cs" />
     <Compile Include="Resources\CoinsHandler.cs" />
     <Compile Include="Resources\ConnectionHandler.cs" />
     <Compile Include="Resources\Constants.cs" />
