@@ -14,14 +14,14 @@ namespace KillAllNeighbors.Resources
         private int currentCoins = 0;
         private Random seed;
         private Timer coinSpawnTimer = new Timer { Interval = 1000 }; //Every 1 sec
-        private List<Coin> coinList = new List<Coin>();
+        private List<ICurrency> coinList = new List<ICurrency>();
 
         public CoinsController()
         {
             seed = new Random();
         }
 
-        public Coin SpawnNewCoin()
+        public ICurrency SpawnNewCoin()
         {
             if(currentCoins <= maxCoins)
             {
@@ -33,30 +33,30 @@ namespace KillAllNeighbors.Resources
             }
         }
 
-        public List<Coin> GetCoinList()
+        public List<ICurrency> GetCoinList()
         {
             return coinList;
         }
 
-        public void RemoveCoin(Coin coin)
+        public void RemoveCoin(ICurrency coin)
         {
             coinList.Remove(coin);
             currentCoins--;
         }
 
-        private Coin AddRandomCoin()
+        private ICurrency AddRandomCoin()
         {
-            Coin _tempCoin = new Coin(1, seed);
+            ICurrency _tempCoin = CoinsFactory.MakeCoin(seed.Next(1, 11), seed.Next(Constants.MIN_BOUND_X, Constants.VIEW_SIZE_X), seed.Next(Constants.MIN_BOUND_Y, Constants.VIEW_SIZE_Y));
             currentCoins++;
             coinList.Add(_tempCoin);
             return _tempCoin;
         }
 
-        private Coin RemoveRandomCoin()
+        private ICurrency RemoveRandomCoin()
         {
             Random _randomCoinSeed = new Random();
             int _takeIndex = _randomCoinSeed.Next(coinList.Count);
-            Coin _tempCoin = coinList[_takeIndex];
+            ICurrency _tempCoin = coinList[_takeIndex];
             coinList.RemoveAt(_takeIndex);
             currentCoins--;
             return _tempCoin;

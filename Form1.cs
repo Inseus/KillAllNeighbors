@@ -35,7 +35,7 @@ namespace KillAllNeighbors
         PictureBoxBuilder builder;
         CreatorOfPictureBox creator;
 
-        delegate void AddOrRemoveToControl(Coin coin);
+        delegate void AddOrRemoveToControl(ICurrency coin);
         delegate void GetVector();
 
         public Form1()
@@ -150,29 +150,29 @@ namespace KillAllNeighbors
         //}
         private void HandleTimerTick(object sender, EventArgs e)
         {
-            Coin _spawnedCoin = coinsController.SpawnNewCoin();
+            ICurrency _spawnedCoin = coinsController.SpawnNewCoin();
             ControlCoins(_spawnedCoin);
         }
 
-        void ControlForm(Coin coin)
+        void ControlForm(ICurrency coin)
         {
             if (coin == null)
                 return;
-            if (Controls.Contains(coin.GetFormControlItem()))
+            if (Controls.Contains(coin.controlItem))
             {
-                Controls.Remove(coin.GetFormControlItem());
+                Controls.Remove(coin.controlItem);
                 label1.Text = "Coins: " + CoinsHandler.Instance.GetCoinsCount();
                 thisPlayer.player.coins = CoinsHandler.Instance.GetCoinsCount();
                 return;
             }
             else
             {
-                Controls.Add(coin.GetFormControlItem());
+                Controls.Add(coin.controlItem);
                 return;
             }
         }
 
-        void ControlCoins(Coin tempCoin)
+        void ControlCoins(ICurrency tempCoin)
         {
             try
             {
@@ -199,7 +199,7 @@ namespace KillAllNeighbors
 
         private void TryCollectCoin()
         {
-            Coin _temp = CoinsHandler.Instance.TryCollectCoin(playerObject, coinsController.GetCoinList());
+            ICurrency _temp = CoinsHandler.Instance.TryCollectCoin(playerObject, coinsController.GetCoinList());
             if (_temp != null)
             {
                 coinsController.RemoveCoin(_temp);

@@ -14,5 +14,7 @@ namespace KillAllNeighbors
 
         public const int MIN_BOUND_X = 0;
         public const int MIN_BOUND_Y = 0;
+
+        public const int COINS_SIZE_MULTIPLIER = 3;
     }
 }
