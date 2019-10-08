@@ -106,7 +106,6 @@
     <Compile Include="Resources\Constants.cs" />
     <Compile Include="Resources\Player.cs" />
     <Compile Include="Resources\PlayerWithObject.cs" />
-    <Compile Include="Resources\Strategy\Context.cs" />
     <Compile Include="Resources\Strategy\Implementation\Machinegun.cs" />
     <Compile Include="Resources\Strategy\Implementation\Pistol.cs" />
     <Compile Include="Resources\Strategy\Implementation\Sniper.cs" />

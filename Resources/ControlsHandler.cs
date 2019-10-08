@@ -27,7 +27,7 @@ namespace KillAllNeighbors
         private static readonly object instanceLock = new object();
         private int speedMultiplier = 5;
         private string lastDirection = "up";
-        private Context context; 
+        private Bullet bullet; 
         private CreatorOfPictureBox creator;
         public static ControlsHandler Instance {
             get
@@ -83,18 +83,18 @@ namespace KillAllNeighbors
 
             if (Keyboard.IsKeyDown(Key.NumPad1))
             {
-                context = new Context(new Pistol());
-                return context.ContextInterface(creator);
+                bullet = new Bullet(new Pistol());
+                return bullet.ContextInterface(creator);
             }
             if (Keyboard.IsKeyDown(Key.NumPad2))
             {
-                context = new Context(new Machinegun());
-                return context.ContextInterface(creator);
+                bullet = new Bullet(new Machinegun());
+                return bullet.ContextInterface(creator);
             }
             if (Keyboard.IsKeyDown(Key.NumPad3))
             {
-                context = new Context(new Sniper());
-                return context.ContextInterface(creator);
+                bullet = new Bullet(new Sniper());
+                return bullet.ContextInterface(creator);
                 
             }
             return null;
