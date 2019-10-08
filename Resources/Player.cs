@@ -16,6 +16,7 @@ namespace KillAllNeighbors.Resources
         public long PosX { get; set; }
         public long PosY { get; set; }
         public string facing { get; set; }
+        public string message { get; set; }
         public Player()
         {
             PosX = 0;
@@ -25,6 +26,7 @@ namespace KillAllNeighbors.Resources
             health = 100;
             name = "DefaultName";
             facing = "down";
+            message = "";
         }
 
         public void SetId(long _id)

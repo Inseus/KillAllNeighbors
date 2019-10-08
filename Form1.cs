@@ -59,10 +59,13 @@ namespace KillAllNeighbors
             // Surandam dar nesancius zaidejus ir pridedam
             foreach (Player p in playerCollection)
             {
+                label2.Text = p.message;
+                //if (p.coins % 10 == 0 && p.coins != 0)
+                    // label2.Text = "Player " + p.id.ToString() + " collected " + p.coins.ToString() + " coins";   
 
                 if (enemyList.Find(x => x.player.id == p.id) == null)
                 {
-
+                    label2.Text = "";
                     builder = new EnemyBoxBuilder();
                     creator.Construct(builder);
                     var box = builder.GetResult();
