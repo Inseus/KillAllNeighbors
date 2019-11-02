@@ -17,9 +17,9 @@ namespace KillAllNeighbors.Resources
         {
             this._strategy = strategy;
         }
-        public Bullet ContextInterface(CreatorOfPictureBox creator)
+        public Bullet ContextInterface()
         {
-            return _strategy.Shoot(creator);
+            return _strategy.Shoot();
         }
         // start the variable
 
@@ -37,9 +37,6 @@ namespace KillAllNeighbors.Resources
         {
             this.speed = speed;
             bullet = box;
-
-
-
         }
         public void mkBullet(Form form)
         {
@@ -52,7 +49,6 @@ namespace KillAllNeighbors.Resources
             tm.Interval = speed; // set the timer interval to speed
             tm.Tick += new EventHandler(tm_Tick); // assignment the timer with an event
             tm.Start(); // start the timer
-
         }
 
         public void tm_Tick(object sender, EventArgs e)

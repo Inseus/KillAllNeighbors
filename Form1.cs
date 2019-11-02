@@ -1,5 +1,7 @@
 ﻿using KillAllNeighbors.Resources;
+using KillAllNeighbors.Resources.Adapter;
 using KillAllNeighbors.Resources.Builder;
+using KillAllNeighbors.Resources.Decorator;
 using KillAllNeighbors.Resources.Strategy;
 using Newtonsoft.Json;
 using System;
@@ -24,15 +26,13 @@ namespace KillAllNeighbors
         private Timer moveTimer;
         private Timer requestTimer;
         private Vector2 _temp = new Vector2();
-        private PictureBox playerObject;
         private CoinsController coinsController;
         private static readonly object lockObject = new object();
         private int coinSpawnInterval = 300;
         private int moveInterval = 30;
         private int requestInterval = 100;
-        public List<PlayerWithObject> enemyList;
-        public PlayerWithObject thisPlayer;
-        PictureBoxBuilder builder;
+        public List<Enemy> enemyList = new List<Enemy>();
+        public Player thisPlayer;
         CreatorOfPictureBox creator;
 
         delegate void AddOrRemoveToControl(ICurrency coin);
@@ -46,43 +46,12 @@ namespace KillAllNeighbors
         {
             await connectionHandler.Connect();
         }
-        public async Task CreateEnemyAndUpdateEnemy()
+        public void UpdateEnemyListFromServer()
         {
-
-            ICollection<Player> playerCollection = await connectionHandler.GetAllPlayersData();
-            if (playerCollection == null)
-            {
-                return;
-            }
-
-            playerCollection = playerCollection.Where(player => player.id != this.thisPlayer.player.id).ToList();
-            // Surandam dar nesancius zaidejus ir pridedam
-            foreach (Player p in playerCollection)
-            {
-                label2.Text = p.message;
-                //if (p.coins % 10 == 0 && p.coins != 0)
-                    // label2.Text = "Player " + p.id.ToString() + " collected " + p.coins.ToString() + " coins";   
-
-                if (enemyList.Find(x => x.player.id == p.id) == null)
-                {
-                    label2.Text = "";
-                    builder = new EnemyBoxBuilder();
-                    creator.Construct(builder);
-                    var box = builder.GetResult();
-                    this.Controls.Add(box);
-                    PlayerWithObject temp = new PlayerWithObject(box, p);
-                    enemyList.Add(temp);
-                }
-                else
-                {
-                    enemyList.Find(x => x.player.id == p.id).movableObject.Location = new Point((int)p.PosX, (int)p.PosY);
-
-                }
-
-            }
-
+            // Adapter design pattern
+            IUnitsToEnemies enemies = new UnitsToEnemiesAdapter(connectionHandler);
+            enemies.ConvertUnitsToEnemies(enemyList, this, creator, thisPlayer);
         }
-
         private void AddEvents()
         {
             gameTimer.Tick += HandleTimerTick;
@@ -90,17 +59,16 @@ namespace KillAllNeighbors
             requestTimer.Tick += HandleRequestTick;
             this.FormClosing += AppClose;
         }
-
         private void HandleRequestTick(object sender, EventArgs e)
         {
             if (connectionHandler.connectionEstablished)
             {
-                connectionHandler.UpdatePlayerData(playerObject.Location.X, playerObject.Location.Y);
-                CreateEnemyAndUpdateEnemy();
+                connectionHandler.UpdatePlayerData();
+                UpdateEnemyListFromServer();
+                EnemiesShooting();
             }
 
         }
-
         private void HandleMoveTimerTick(object sender, EventArgs e)
         {
             lock (lockObject)
@@ -108,52 +76,69 @@ namespace KillAllNeighbors
                 TryMove();
                 TryCollectCoin();
                 //TryShoot();
-                Collisions();
+                //Collisions();
             }
+        }
+        private void EnemiesShooting()
+        {
+            foreach (var enemy in enemyList)
+            {
+                if(enemy.isShooting==1)
+                {
+                    Bullet typeOfBullet = ControlsHandler.Instance.GetWeaponEnemy(creator,enemy.shootingType);
+                    if (typeOfBullet != null)
+                    {
+                        typeOfBullet.direction = enemy.facing;
+                        typeOfBullet.bulletLeft = enemy.getMovableObject().Left
+                            + (enemy.getMovableObject().Width / 2); // place the bullet to left half of the player
+                        typeOfBullet.bulletTop = enemy.getMovableObject().Top +
+                            (enemy.getMovableObject().Height / 2); // place the bullet on top half of the player
+                        typeOfBullet.mkBullet(this); // run the function mkBullet from the bullet class. 
+                    }
+                }
+            }         
         }
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            string direction = ControlsHandler.Instance.GetDirection();
+            thisPlayer.facing = ControlsHandler.Instance.GetDirection();
             if (Keyboard.IsKeyDown(Key.NumPad1) || Keyboard.IsKeyDown(Key.NumPad2) || Keyboard.IsKeyDown(Key.NumPad3))
             {
-                this.Controls.Add(playerObject);
+                thisPlayer.isShooting = 1;
                 // this is the function thats makes the new bullets in this game
-                Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon(creator);
+
+                Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon(creator, thisPlayer);
                 if (typeOfBullet != null)
                 {
-                    
-                    typeOfBullet.direction = direction; // assignment the direction to the bullet
-                    typeOfBullet.bulletLeft = playerObject.Left + (playerObject.Width / 2); // place the bullet to left half of the player
-                    typeOfBullet.bulletTop = playerObject.Top + (playerObject.Height / 2); // place the bullet on top half of the player
+                    typeOfBullet.direction = thisPlayer.facing; // assignment the direction to the bullet
+                    typeOfBullet.bulletLeft = thisPlayer.getMovableObject().Left
+                        + (thisPlayer.getMovableObject().Width / 2); // place the bullet to left half of the player
+                    typeOfBullet.bulletTop = thisPlayer.getMovableObject().Top +
+                        (thisPlayer.getMovableObject().Height / 2); // place the bullet on top half of the player
                     typeOfBullet.mkBullet(this); // run the function mkBullet from the bullet class. 
                 }
+
+                //Bullet typeOfBullet1 = ControlsHandler.Instance.GetWeapon(creator);
+                //if (typeOfBullet1 != null)
+                //{
+                //PictureBox imenemy = enemyList[enemyList.Count - 1].getMovableObject();
+                //typeOfBullet1.direction = direction; // assignment the direction to the bullet
+                //typeOfBullet1.bulletLeft = imenemy.Left
+                //+(imenemy.Width / 2); // place the bullet to left half of the player
+                //typeOfBullet1.bulletTop = imenemy.Top +
+                //        (imenemy.Height / 2); // place the bullet on top half of the player
+
+                //typeOfBullet1.mkBullet(this); // run the function mkBullet from the bullet class. 
+                //}
             }
+
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
-        //private void TryShoot()
-        //{
-
-        //    this.Controls.Add(playerObject);
-        //        string direction = ControlsHandler.Instance.GetDirection();
-        //    // this is the function thats makes the new bullets in this game
-        //    Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon(creator);
-        //    if (typeOfBullet != null)
-        //    {
-        //        typeOfBullet.direction = direction; // assignment the direction to the bullet
-        //        typeOfBullet.bulletLeft = playerObject.Left + (playerObject.Width / 2); // place the bullet to left half of the player
-        //        typeOfBullet.bulletTop = playerObject.Top + (playerObject.Height / 2); // place the bullet on top half of the player
-        //        typeOfBullet.mkBullet(this); // run the function mkBullet from the bullet class. 
-        //    }
-
-
-        //}
         private void HandleTimerTick(object sender, EventArgs e)
         {
             ICurrency _spawnedCoin = coinsController.SpawnNewCoin();
             ControlCoins(_spawnedCoin);
         }
-
         void ControlForm(ICurrency coin)
         {
             if (coin == null)
@@ -162,7 +147,7 @@ namespace KillAllNeighbors
             {
                 Controls.Remove(coin.controlItem);
                 label1.Text = "Coins: " + CoinsHandler.Instance.GetCoinsCount();
-                thisPlayer.player.coins = CoinsHandler.Instance.GetCoinsCount();
+                thisPlayer.coins = CoinsHandler.Instance.GetCoinsCount();
                 return;
             }
             else
@@ -171,7 +156,6 @@ namespace KillAllNeighbors
                 return;
             }
         }
-
         void ControlCoins(ICurrency tempCoin)
         {
             try
@@ -186,33 +170,26 @@ namespace KillAllNeighbors
                 Console.WriteLine("Thread was spawning elements on disposed object");
             }
         }
-
         private void TryMove()
         {
             _temp = ControlsHandler.Instance.GetVector();
-            if (playerObject.Location.X + _temp.x >= Constants.MIN_BOUND_X && playerObject.Location.Y + _temp.y >= Constants.MIN_BOUND_Y)
+            if (thisPlayer.getMovableObject().Location.X + _temp.x >= Constants.MIN_BOUND_X && thisPlayer.getMovableObject().Location.Y + _temp.y >= Constants.MIN_BOUND_Y)
             {
 
-                playerObject.Location = new Point(playerObject.Location.X + _temp.x, playerObject.Location.Y + _temp.y);
+                thisPlayer.getMovableObject().Location = new Point(thisPlayer.getMovableObject().Location.X + 
+                    _temp.x, thisPlayer.getMovableObject().Location.Y + _temp.y);
+                thisPlayer.setCordinatesFromPictureBoxToPlayer();
             }
         }
-
         private void TryCollectCoin()
         {
-            ICurrency _temp = CoinsHandler.Instance.TryCollectCoin(playerObject, coinsController.GetCoinList());
+            ICurrency _temp = CoinsHandler.Instance.TryCollectCoin(thisPlayer.getMovableObject(), coinsController.GetCoinList());
             if (_temp != null)
             {
                 coinsController.RemoveCoin(_temp);
                 ControlCoins(_temp);
             }
         }
-
-
-        private void PictureBox1_Click(object sender, EventArgs e)
-        {
-            // Do nothing
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             SetValues();
@@ -227,7 +204,7 @@ namespace KillAllNeighbors
         {
             // run the first for each loop below
             // X is a control and we will search for all controls in this loop
-            foreach (PlayerWithObject x in enemyList)
+            foreach (Enemy x in enemyList)
             {
                 // below is the second for loop, this is nexted inside the first one
                 // the bullet and zombie needs to be different than each other
@@ -236,10 +213,10 @@ namespace KillAllNeighbors
                 {
                     // below is the selection thats identifying the bullet and zombie
 
-                    if ((j is PictureBox && j.Name == "bullet") && (x.movableObject is PictureBox && x.movableObject.Name == "enemy"))
+                    if ((j is PictureBox && j.Name == "bullet") && (x.getMovableObject() is PictureBox && x.getMovableObject().Name == "enemy"))
                     {
                         // below is the if statement thats checking if bullet hits the zombie
-                        if (x.movableObject.Bounds.IntersectsWith(j.Bounds))
+                        if (x.getMovableObject().Bounds.IntersectsWith(j.Bounds))
                         {
                             this.Controls.Remove(j); // this will remove the bullet from the screen
                             j.Dispose(); // this will dispose the bullet all together from the program
@@ -255,28 +232,19 @@ namespace KillAllNeighbors
                 }
             }
         }
-
         private void SetValues()
         {
-            // Sukuriama kurėją
             creator = new CreatorOfPictureBox();
-            // Kurėjas sukuria įrankį skirtą konstruoti zaidėjo pictur boxa
-            builder = new PlayerBoxBuilder();
-            // Sukuriamas žaidėjo pictur boxas
-            creator.Construct(builder);
-            playerObject = builder.GetResult();
-            this.Controls.Add(playerObject);
-            thisPlayer = new PlayerWithObject(playerObject, new Player());
-            enemyList = new List<PlayerWithObject>();
+            thisPlayer = new Player(creator);
+            thisPlayer.addToForm(this);
             this.MinimumSize = new Size(Constants.VIEW_SIZE_X, Constants.VIEW_SIZE_Y);
-            this.AutoScrollPosition = playerObject.Location;
+            this.AutoScrollPosition = thisPlayer.getMovableObject().Location;
             gameTimer = new Timer { Interval = coinSpawnInterval };
             moveTimer = new Timer { Interval = moveInterval };
             requestTimer = new Timer { Interval = requestInterval };
             coinsController = new CoinsController();
-            connectionHandler = new ConnectionHandler(thisPlayer.player);
+            connectionHandler = new ConnectionHandler(thisPlayer);
         }
-
         private void AppClose(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;

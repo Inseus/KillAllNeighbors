@@ -28,7 +28,6 @@ namespace KillAllNeighbors
         private int speedMultiplier = 5;
         private string lastDirection = "up";
         private Bullet bullet; 
-        private CreatorOfPictureBox creator;
         public static ControlsHandler Instance {
             get
             {
@@ -69,7 +68,6 @@ namespace KillAllNeighbors
         {
             if (Upwards() != zero)
                 lastDirection = "up";
-
             if (Downwards() != zero)
                 lastDirection = "down";
             if (Right() != zero)
@@ -78,24 +76,49 @@ namespace KillAllNeighbors
                 lastDirection = "left";
             return lastDirection;
         }
-        public Bullet GetWeapon(CreatorOfPictureBox creator)
+        public Bullet GetWeapon(CreatorOfPictureBox creator,Player mainPlayer)
         {
 
             if (Keyboard.IsKeyDown(Key.NumPad1))
             {
-                bullet = new Bullet(new Pistol());
-                return bullet.ContextInterface(creator);
+                bullet = new Bullet(new Pistol(creator));
+                mainPlayer.shootingType = 1;
+                return bullet.ContextInterface();
+                
             }
             if (Keyboard.IsKeyDown(Key.NumPad2))
             {
-                bullet = new Bullet(new Machinegun());
-                return bullet.ContextInterface(creator);
+                bullet = new Bullet(new Machinegun(creator));
+                mainPlayer.shootingType = 2;
+                return bullet.ContextInterface();
             }
             if (Keyboard.IsKeyDown(Key.NumPad3))
             {
-                bullet = new Bullet(new Sniper());
-                return bullet.ContextInterface(creator);
+                bullet = new Bullet(new Sniper(creator));
+                mainPlayer.shootingType = 3;
+                return bullet.ContextInterface();
                 
+            }
+            return null;
+        }
+        public Bullet GetWeaponEnemy(CreatorOfPictureBox creator, int strategy)
+        {
+
+            if (strategy == 1)
+            {
+                bullet = new Bullet(new Pistol(creator));
+                return bullet.ContextInterface();
+            }
+            if (strategy == 2)
+            {
+                bullet = new Bullet(new Machinegun(creator));
+                return bullet.ContextInterface();
+            }
+            if (strategy == 3)
+            {
+                bullet = new Bullet(new Sniper(creator));
+                return bullet.ContextInterface();
+
             }
             return null;
         }

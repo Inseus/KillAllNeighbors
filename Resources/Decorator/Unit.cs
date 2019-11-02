@@ -3,55 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace KillAllNeighbors.Resources
+namespace KillAllNeighbors.Resources.Decorator
 {
-    public class Player
-    {
+    public class Unit
+    {       
         public int coins { get; set; }
         public int score { get; set; }
         public float health { get; set; }
         public long id { get; set; }
         public string name { get; set; }
         public long PosX { get; set; }
-        public long PosY { get; set; }
-        public string facing { get; set; }
+        public long PosY { get; set; }       
         public string message { get; set; }
-        public Player()
+
+        public int isShooting { get; set; }
+
+        public int shootingType { get; set; }
+
+        public string facing { get; set; }
+        public Unit()
         {
+            isShooting = 0;
+            shootingType = 0;
+            facing = "down";
             PosX = 0;
             PosY = 0;
             coins = 0;
             score = 0;
             health = 100;
             name = "DefaultName";
-            facing = "down";
             message = "";
         }
-
         public void SetId(long _id)
         {
             id = _id;
-        }
-        public void setDirectionUp()
-        {
-            facing = "up";
-        }
-        public void setDirectionDown()
-        {
-            facing = "down";
-        }
-        public void setDirectionLeft()
-        {
-            facing = "left";
-        }
-        public void setDirectioRight()
-        {
-            facing = "right";
-        }
-        public string getDirection()
-        {
-            return facing;
         }
     }
 }

@@ -9,6 +9,11 @@ namespace KillAllNeighbors.Resources.Strategy
 {
     public abstract class ShootAlgorithm
     {
-        public abstract Bullet Shoot(CreatorOfPictureBox creator);
+        protected CreatorOfPictureBox creator;
+        public ShootAlgorithm(CreatorOfPictureBox _creator)
+        {
+            creator = _creator;
+        }
+        public abstract Bullet Shoot();
     }
 }

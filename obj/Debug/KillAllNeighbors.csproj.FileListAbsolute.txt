@@ -16,7 +16,6 @@ C:\Users\Username\Documents\GitHub\KillAllNeighbors\bin\Debug\KillAllNeighbors.e
 C:\Users\Username\Documents\GitHub\KillAllNeighbors\bin\Debug\KillAllNeighbors.application
 C:\Users\Username\Documents\GitHub\KillAllNeighbors\bin\Debug\KillAllNeighbors.pdb
 C:\Users\Username\Documents\GitHub\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.CopyComplete
-C:\Users\Username\Documents\GitHub\KillAllNeighbors\obj\Debug\KillAllNeighbors.csprojAssemblyReference.cache
 D:\Github repository\KillAllNeighbors\bin\Debug\KillAllNeighbors.exe.config
 D:\Github repository\KillAllNeighbors\bin\Debug\KillAllNeighbors.exe.manifest
 D:\Github repository\KillAllNeighbors\bin\Debug\KillAllNeighbors.application

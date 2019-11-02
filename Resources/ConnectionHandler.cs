@@ -1,4 +1,5 @@
 ﻿using KillAllNeighbors.Resources.Builder;
+using KillAllNeighbors.Resources.Decorator;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,14 +20,18 @@ namespace KillAllNeighbors.Resources
         });
         private string playerDataURL = "https://localhost:44312/api/player";
         private string coinsDataURL = "https://localhost:44312/api/coins";
+        private Point lastLocation;
+        private int lastShooting;
 
         public Boolean connectionEstablished = false;
-        Player thisPlayer;
+        Unit thisPlayer;
 
 
-        public ConnectionHandler(Player player)
+        public ConnectionHandler(Unit player)
         {
-            this.thisPlayer = player;
+            thisPlayer = player;
+            lastLocation = new Point(0, 0);
+            lastShooting = 1;
         }
 
         public async Task Connect()
@@ -34,18 +39,19 @@ namespace KillAllNeighbors.Resources
             HttpResponseMessage response = await client.PostAsJsonAsync(playerDataURL, thisPlayer);
             if (response.IsSuccessStatusCode)
             {
-                thisPlayer.SetId(JsonConvert.DeserializeObject<Player>(await response.Content.ReadAsStringAsync()).id);
+                thisPlayer.SetId(JsonConvert.DeserializeObject<Unit>(await response.Content.ReadAsStringAsync()).id);
                 connectionEstablished = true;
             }
             Console.WriteLine("DD");
         }
 
-        public async Task UpdatePlayerData(int x, int y)
+        public async Task UpdatePlayerData()
         {
-            if(thisPlayer.PosX!=x || thisPlayer.PosX != y)
+            if(thisPlayer.PosX != lastLocation.X || thisPlayer.PosY != lastLocation.Y || thisPlayer.isShooting != lastShooting)
             {
-                this.thisPlayer.PosX = x;
-                this.thisPlayer.PosY = y;
+                lastLocation.X = (int)thisPlayer.PosX;
+                lastLocation.Y = (int)thisPlayer.PosY;
+                lastShooting = thisPlayer.isShooting;
                 HttpResponseMessage response = await client.PutAsJsonAsync(playerDataURL + "/" + thisPlayer.id, thisPlayer);
                 if (response.IsSuccessStatusCode)
                 {
@@ -54,18 +60,18 @@ namespace KillAllNeighbors.Resources
             }              
             }
 
-            public async Task<ICollection<Player>> GetAllPlayersData()
+            public async Task<ICollection<Unit>> GetAllPlayersData()
             {
 
-                ICollection<Player> players = null;
+                ICollection<Unit> players = null;
                 HttpResponseMessage response = await client.GetAsync(playerDataURL);
                 if (response.IsSuccessStatusCode)
                 {
-                    players = await response.Content.ReadAsAsync<ICollection<Player>>();
+                    players = await response.Content.ReadAsAsync<ICollection<Unit>>();
 
                 }
                 return players;
             }
 
-        }
     }
+}

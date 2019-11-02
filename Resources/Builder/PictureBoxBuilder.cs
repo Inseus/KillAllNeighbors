@@ -9,14 +9,19 @@ namespace KillAllNeighbors.Resources.Builder
 {
     public abstract class PictureBoxBuilder
     {
-        public abstract void BuildName();
-        public abstract void BuildPictureImage();
+        protected PictureBox box;
+        public PictureBoxBuilder( PictureBox m)
+        {
+            box = m;
+        }
+        public abstract PictureBoxBuilder BuildName();
+        public abstract PictureBoxBuilder BuildPictureImage();
 
-        public abstract void BuildPictureSize();
+        public abstract PictureBoxBuilder BuildPictureSize();
 
-        public abstract void BuildLocation();
+        public abstract PictureBoxBuilder BuildLocation();
 
-        public abstract void BuildPictureColor();
+        public abstract PictureBoxBuilder BuildPictureColor();
         public abstract PictureBox GetResult();
     }
 }

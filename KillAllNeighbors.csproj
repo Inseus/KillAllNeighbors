@@ -91,6 +91,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Adapter\IUnitsToEnemies.cs" />
+    <Compile Include="Resources\Adapter\UnitsToEnemiesAdapter.cs" />
     <Compile Include="Resources\Builder\ConcreteBuilder\PistolBulletBuilder.cs" />
     <Compile Include="Resources\Builder\ConcreteBuilder\SniperBulletBuilder.cs" />
     <Compile Include="Resources\Builder\ConcreteBuilder\EnemyBoxBuilder.cs" />
@@ -105,8 +107,9 @@
     <Compile Include="Resources\CoinsHandler.cs" />
     <Compile Include="Resources\ConnectionHandler.cs" />
     <Compile Include="Resources\Constants.cs" />
-    <Compile Include="Resources\Player.cs" />
-    <Compile Include="Resources\PlayerWithObject.cs" />
+    <Compile Include="Resources\Decorator\Enemy.cs" />
+    <Compile Include="Resources\Decorator\Unit.cs" />
+    <Compile Include="Resources\Decorator\Player.cs" />
     <Compile Include="Resources\Strategy\Implementation\Machinegun.cs" />
     <Compile Include="Resources\Strategy\Implementation\Pistol.cs" />
     <Compile Include="Resources\Strategy\Implementation\Sniper.cs" />

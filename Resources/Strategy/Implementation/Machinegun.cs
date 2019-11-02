@@ -4,22 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace KillAllNeighbors.Resources.Strategy.Implementation
 {
     class Machinegun : ShootAlgorithm
     {
         PictureBoxBuilder builder;
-        public override Bullet Shoot(CreatorOfPictureBox creator)
+        public Machinegun(CreatorOfPictureBox _creator) : base(_creator) { }
+        public override Bullet Shoot()
         {
 
-            // Sukuriama kurėją
-            creator = new CreatorOfPictureBox();
             // Kurėjas sukuria įrankį skirtą konstruoti zaidėjo pictur boxa
-            builder = new SmallBulletBuilder();
+            builder = new SmallBulletBuilder(new PictureBox());
             // Sukuriamas žaidėjo pictur boxas
-            creator.ConstructMinimal(builder);
-            return new Bullet(60, builder.GetResult());
+            var box =creator.ConstructMinimal(builder);
+            return new Bullet(60, box);
         }
     }
 }
