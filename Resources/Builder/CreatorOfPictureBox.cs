@@ -17,7 +17,6 @@ namespace KillAllNeighbors.Resources.Builder
                 .BuildPictureColor()
                 .BuildPictureImage()
                 .BuildPictureSize().GetResult();
-
         }
         public PictureBox ConstructMinimal(PictureBoxBuilder builder)
         {

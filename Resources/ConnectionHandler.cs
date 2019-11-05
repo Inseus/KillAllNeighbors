@@ -26,7 +26,6 @@ namespace KillAllNeighbors.Resources
         public Boolean connectionEstablished = false;
         Unit thisPlayer;
 
-
         public ConnectionHandler(Unit player)
         {
             thisPlayer = player;
@@ -42,12 +41,11 @@ namespace KillAllNeighbors.Resources
                 thisPlayer.SetId(JsonConvert.DeserializeObject<Unit>(await response.Content.ReadAsStringAsync()).id);
                 connectionEstablished = true;
             }
-            Console.WriteLine("DD");
         }
 
         public async Task UpdatePlayerData()
         {
-            if(thisPlayer.PosX != lastLocation.X || thisPlayer.PosY != lastLocation.Y || thisPlayer.isShooting != lastShooting)
+            if (thisPlayer.PosX != lastLocation.X || thisPlayer.PosY != lastLocation.Y || thisPlayer.isShooting != lastShooting)
             {
                 lastLocation.X = (int)thisPlayer.PosX;
                 lastLocation.Y = (int)thisPlayer.PosY;
@@ -57,21 +55,21 @@ namespace KillAllNeighbors.Resources
                 {
                     Uri gizmoURL = response.Headers.Location;
                 }
-            }              
             }
+        }
 
-            public async Task<ICollection<Unit>> GetAllPlayersData()
+        public async Task<ICollection<Unit>> GetAllPlayersData()
+        {
+
+            ICollection<Unit> players = null;
+            HttpResponseMessage response = await client.GetAsync(playerDataURL);
+            if (response.IsSuccessStatusCode)
             {
+                players = await response.Content.ReadAsAsync<ICollection<Unit>>();
 
-                ICollection<Unit> players = null;
-                HttpResponseMessage response = await client.GetAsync(playerDataURL);
-                if (response.IsSuccessStatusCode)
-                {
-                    players = await response.Content.ReadAsAsync<ICollection<Unit>>();
-
-                }
-                return players;
             }
+            return players;
+        }
 
     }
 }

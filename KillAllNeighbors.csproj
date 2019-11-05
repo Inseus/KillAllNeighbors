@@ -110,6 +110,7 @@
     <Compile Include="Resources\Decorator\Enemy.cs" />
     <Compile Include="Resources\Decorator\Unit.cs" />
     <Compile Include="Resources\Decorator\Player.cs" />
+    <Compile Include="Resources\Facade\Facade.cs" />
     <Compile Include="Resources\Prototype\CoinPrototype.cs" />
     <Compile Include="Resources\Strategy\Implementation\Machinegun.cs" />
     <Compile Include="Resources\Strategy\Implementation\Pistol.cs" />

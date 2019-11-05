@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace KillAllNeighbors.Resources
 {
-    public class Player :Unit
+    public class Player : Unit
     {
         PictureBox movableObject;
         public CreatorOfPictureBox creator;
@@ -23,8 +23,6 @@ namespace KillAllNeighbors.Resources
         {
             PosX = movableObject.Location.X;
             PosY = movableObject.Location.Y;
-
-
         }
         public void setDirectionUp()
         {

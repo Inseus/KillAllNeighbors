@@ -2,6 +2,7 @@
 using KillAllNeighbors.Resources.Adapter;
 using KillAllNeighbors.Resources.Builder;
 using KillAllNeighbors.Resources.Decorator;
+using KillAllNeighbors.Resources.Facade;
 using KillAllNeighbors.Resources.Strategy;
 using Newtonsoft.Json;
 using System;
@@ -21,19 +22,18 @@ namespace KillAllNeighbors
     public partial class Form1 : Form
     {
         // Interval 1000 = 1 sekunde, kuo didesnis skaicius, tuo leciau viskas vyks
-        private ConnectionHandler connectionHandler;
         private Timer gameTimer;
         private Timer moveTimer;
         private Timer requestTimer;
-        private Vector2 _temp = new Vector2();
-        private CoinsController coinsController;
         private static readonly object lockObject = new object();
+
         private int coinSpawnInterval = 300;
         private int moveInterval = 30;
         private int requestInterval = 100;
-        public List<Enemy> enemyList = new List<Enemy>();
-        public Player thisPlayer;
-        CreatorOfPictureBox creator;
+
+        private Player thisPlayer;
+        private Facade formControls;
+        private CreatorOfPictureBox creatorOfPictureBox;
 
         delegate void AddOrRemoveToControl(ICurrency coin);
         delegate void GetVector();
@@ -42,32 +42,17 @@ namespace KillAllNeighbors
         {
             InitializeComponent();
         }
-        public async void Connect()
-        {
-            await connectionHandler.Connect();
-        }
-        public void UpdateEnemyListFromServer()
-        {
-            // Adapter design pattern
-            IUnitsToEnemies enemies = new UnitsToEnemiesAdapter(connectionHandler);
-            enemies.ConvertUnitsToEnemies(enemyList, this, creator, thisPlayer);
-        }
+
         private void AddEvents()
         {
-            gameTimer.Tick += HandleTimerTick;
+            gameTimer.Tick += HandleCoinsControlTick;
             moveTimer.Tick += HandleMoveTimerTick;
             requestTimer.Tick += HandleRequestTick;
             this.FormClosing += AppClose;
         }
         private void HandleRequestTick(object sender, EventArgs e)
         {
-            if (connectionHandler.connectionEstablished)
-            {
-                connectionHandler.UpdatePlayerData();
-                UpdateEnemyListFromServer();
-                EnemiesShooting();
-            }
-
+            formControls.HandleConnection();
         }
         private void HandleMoveTimerTick(object sender, EventArgs e)
         {
@@ -79,25 +64,7 @@ namespace KillAllNeighbors
                 //Collisions();
             }
         }
-        private void EnemiesShooting()
-        {
-            foreach (var enemy in enemyList)
-            {
-                if(enemy.isShooting==1)
-                {
-                    Bullet typeOfBullet = ControlsHandler.Instance.GetWeaponEnemy(creator,enemy.shootingType);
-                    if (typeOfBullet != null)
-                    {
-                        typeOfBullet.direction = enemy.facing;
-                        typeOfBullet.bulletLeft = enemy.getMovableObject().Left
-                            + (enemy.getMovableObject().Width / 2); // place the bullet to left half of the player
-                        typeOfBullet.bulletTop = enemy.getMovableObject().Top +
-                            (enemy.getMovableObject().Height / 2); // place the bullet on top half of the player
-                        typeOfBullet.mkBullet(this); // run the function mkBullet from the bullet class. 
-                    }
-                }
-            }         
-        }
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             thisPlayer.facing = ControlsHandler.Instance.GetDirection();
@@ -106,7 +73,7 @@ namespace KillAllNeighbors
                 thisPlayer.isShooting = 1;
                 // this is the function thats makes the new bullets in this game
 
-                Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon(creator, thisPlayer);
+                Bullet typeOfBullet = ControlsHandler.Instance.GetWeapon(creatorOfPictureBox, thisPlayer);
                 if (typeOfBullet != null)
                 {
                     typeOfBullet.direction = thisPlayer.facing; // assignment the direction to the bullet
@@ -130,14 +97,11 @@ namespace KillAllNeighbors
                 //typeOfBullet1.mkBullet(this); // run the function mkBullet from the bullet class. 
                 //}
             }
-
-
             return base.ProcessCmdKey(ref msg, keyData);
         }
-        private void HandleTimerTick(object sender, EventArgs e)
+        private void HandleCoinsControlTick(object sender, EventArgs e)
         {
-            ICurrency _spawnedCoin = coinsController.SpawnNewCoin();
-            ControlCoins(_spawnedCoin);
+            ControlCoins(formControls.SpawnCoin());
         }
         void ControlForm(ICurrency coin)
         {
@@ -172,21 +136,20 @@ namespace KillAllNeighbors
         }
         private void TryMove()
         {
-            _temp = ControlsHandler.Instance.GetVector();
-            if (thisPlayer.getMovableObject().Location.X + _temp.x >= Constants.MIN_BOUND_X && thisPlayer.getMovableObject().Location.Y + _temp.y >= Constants.MIN_BOUND_Y)
+            Vector2 _tempVec = ControlsHandler.Instance.GetVector();
+            if (thisPlayer.getMovableObject().Location.X + _tempVec.x >= Constants.MIN_BOUND_X && thisPlayer.getMovableObject().Location.Y + _tempVec.y >= Constants.MIN_BOUND_Y)
             {
-
                 thisPlayer.getMovableObject().Location = new Point(thisPlayer.getMovableObject().Location.X + 
-                    _temp.x, thisPlayer.getMovableObject().Location.Y + _temp.y);
+                    _tempVec.x, thisPlayer.getMovableObject().Location.Y + _tempVec.y);
                 thisPlayer.setCordinatesFromPictureBoxToPlayer();
             }
         }
         private void TryCollectCoin()
         {
-            ICurrency _temp = CoinsHandler.Instance.TryCollectCoin(thisPlayer.getMovableObject(), coinsController.GetCoinList());
+            ICurrency _temp = CoinsHandler.Instance.TryCollectCoin(thisPlayer.getMovableObject(), formControls.GetCoinList());
             if (_temp != null)
             {
-                coinsController.RemoveCoin(_temp);
+                formControls.RemoveCoin(_temp);
                 ControlCoins(_temp);
             }
         }
@@ -196,15 +159,13 @@ namespace KillAllNeighbors
             moveTimer.Start();
             gameTimer.Start();
             AddEvents();
-            Connect();
             requestTimer.Start();
-            
         }
         private void Collisions()
         {
             // run the first for each loop below
             // X is a control and we will search for all controls in this loop
-            foreach (Enemy x in enemyList)
+            foreach (Enemy x in formControls.GetEnemyList())
             {
                 // below is the second for loop, this is nexted inside the first one
                 // the bullet and zombie needs to be different than each other
@@ -234,16 +195,22 @@ namespace KillAllNeighbors
         }
         private void SetValues()
         {
-            creator = new CreatorOfPictureBox();
-            thisPlayer = new Player(creator);
-            thisPlayer.addToForm(this);
+            creatorOfPictureBox = new CreatorOfPictureBox();
+            thisPlayer = new Player(creatorOfPictureBox);
+            formControls = new Facade(this, thisPlayer, creatorOfPictureBox);
+
             this.MinimumSize = new Size(Constants.VIEW_SIZE_X, Constants.VIEW_SIZE_Y);
             this.AutoScrollPosition = thisPlayer.getMovableObject().Location;
+
             gameTimer = new Timer { Interval = coinSpawnInterval };
             moveTimer = new Timer { Interval = moveInterval };
             requestTimer = new Timer { Interval = requestInterval };
-            coinsController = new CoinsController();
-            connectionHandler = new ConnectionHandler(thisPlayer);
+            InitializePlayer();
+        }
+
+        public void InitializePlayer()
+        {
+            thisPlayer.addToForm(this);
         }
         private void AppClose(object sender, FormClosingEventArgs e)
         {
