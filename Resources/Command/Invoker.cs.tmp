@@ -10,6 +10,16 @@ namespace KillAllNeighbors.Resources.Command
 {
     public class Invoker
     {
+        //private Receiver receiver = new Receiver();
+        //private List<Command> commands = new List<Command>();
+        //private int current = 0;
+
+        //public void AddCommand(int x, int y, Player player)
+        //{
+        //    Command command = new ConcreteCommand(x,y,player);
+        //    command.Execute();
+        //    commands.Add(command);
+        //}
         static Queue<Command> commandBuffer = new Queue<Command>();
         static List<Command> commandHistory = new List<Command>();
         static int counter;
@@ -26,6 +36,7 @@ namespace KillAllNeighbors.Resources.Command
             {
                 Command c = commandBuffer.Dequeue();
                 c.Execute();
+                //commandBuffer.Dequeue().Execute();
                 if(Keyboard.IsKeyDown(Key.W) || Keyboard.IsKeyDown(Key.A) || Keyboard.IsKeyDown(Key.S) || Keyboard.IsKeyDown(Key.D))
                 {
                     commandHistory.Add(c);
