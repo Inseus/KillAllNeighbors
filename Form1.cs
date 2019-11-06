@@ -1,6 +1,7 @@
 ﻿using KillAllNeighbors.Resources;
 using KillAllNeighbors.Resources.Adapter;
 using KillAllNeighbors.Resources.Builder;
+using KillAllNeighbors.Resources.Command;
 using KillAllNeighbors.Resources.Decorator;
 using KillAllNeighbors.Resources.Facade;
 using KillAllNeighbors.Resources.Strategy;
@@ -30,11 +31,10 @@ namespace KillAllNeighbors
         private int coinSpawnInterval = 300;
         private int moveInterval = 30;
         private int requestInterval = 100;
-
         private Player thisPlayer;
         private Facade formControls;
         private CreatorOfPictureBox creatorOfPictureBox;
-
+        private Receiver receiver = new Receiver();
         delegate void AddOrRemoveToControl(ICurrency coin);
         delegate void GetVector();
 
@@ -137,11 +137,15 @@ namespace KillAllNeighbors
         private void TryMove()
         {
             Vector2 _tempVec = ControlsHandler.Instance.GetVector();
+            
             if (thisPlayer.getMovableObject().Location.X + _tempVec.x >= Constants.MIN_BOUND_X && thisPlayer.getMovableObject().Location.Y + _tempVec.y >= Constants.MIN_BOUND_Y)
             {
-                thisPlayer.getMovableObject().Location = new Point(thisPlayer.getMovableObject().Location.X + 
-                    _tempVec.x, thisPlayer.getMovableObject().Location.Y + _tempVec.y);
-                thisPlayer.setCordinatesFromPictureBoxToPlayer();
+                //Resources.Command.ICommand command = new ConcreteCommand(_tempVec.x, _tempVec.y,thisPlayer);
+                Invoker.AddCommand(new ConcreteCommand(receiver, _tempVec.x, _tempVec.y, thisPlayer));
+                //Invoker.AddCommand(_tempVec.x, _tempVec.y, thisPlayer);
+                //thisPlayer.getMovableObject().Location = new Point(thisPlayer.getMovableObject().Location.X + 
+                //    _tempVec.x, thisPlayer.getMovableObject().Location.Y + _tempVec.y);
+                //thisPlayer.setCordinatesFromPictureBoxToPlayer();
             }
         }
         private void TryCollectCoin()
