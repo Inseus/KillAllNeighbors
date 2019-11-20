@@ -23,6 +23,10 @@ namespace KillAllNeighbors.Resources.Adapter
             {
                 return;
             }
+            if(playerCollection.Count == 0)
+            {
+                return;
+            }
             Unit tempUnit = playerCollection.Where(player => player.id == thePlayer.id).ToList()[0];
             playerCollection = playerCollection.Where(player => player.id != thePlayer.id).ToList();
             if (tempUnit.isShooting==1)

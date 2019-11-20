@@ -43,11 +43,14 @@ namespace KillAllNeighbors.Resources.Facade
                 if (player.id== a.whoWon)
                 {
                     playerBoard.LabelText = "You won";
+                    stopTimers();
+                    DisConnect();
                 }
                 else
                 {
                     playerBoard.LabelText = "Game over player" +a.whoWon+" won";
-                    
+                    stopTimers();
+
                 }
                 stopTimers();
             }
@@ -57,7 +60,7 @@ namespace KillAllNeighbors.Resources.Facade
             gameTimer.Enabled = false;
             moveTimer.Enabled = false;
             requestTimer.Enabled = false;
-            DisConnect();
+            
         }
         private async void DisConnect()
         {
