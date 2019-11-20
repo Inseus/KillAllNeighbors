@@ -50,11 +50,9 @@ namespace KillAllNeighbors
             requestTimer.Tick += HandleRequestTick;
             this.FormClosing += AppClose;
         }
-        
         private void HandleRequestTick(object sender, EventArgs e)
         {
             formControls.HandleConnection();
-            formControls.endGame();
         }
         private void HandleMoveTimerTick(object sender, EventArgs e)
         {
@@ -203,7 +201,7 @@ namespace KillAllNeighbors
         {
             creatorOfPictureBox = new CreatorOfPictureBox();
             thisPlayer = new Player(creatorOfPictureBox);
-            
+            formControls = new Facade(this, thisPlayer, creatorOfPictureBox);
 
             this.MinimumSize = new Size(Constants.VIEW_SIZE_X, Constants.VIEW_SIZE_Y);
             this.AutoScrollPosition = thisPlayer.getMovableObject().Location;
@@ -211,7 +209,6 @@ namespace KillAllNeighbors
             gameTimer = new Timer { Interval = coinSpawnInterval };
             moveTimer = new Timer { Interval = moveInterval };
             requestTimer = new Timer { Interval = requestInterval };
-            formControls = new Facade(this, thisPlayer, creatorOfPictureBox, gameTimer, moveTimer, requestTimer);
             InitializePlayer();
         }
 
@@ -226,29 +223,6 @@ namespace KillAllNeighbors
             moveTimer.Enabled = false;
             this.Dispose();
             e.Cancel = false;
-        }
-        public string LabelText
-        {
-            get
-            {
-                return this.label2.Text;
-            }
-            set
-            {
-                this.button1.Visible = true;
-                this.label2.Visible = true;
-                this.label2.Text = value;
-            }
-        }
-        public void startNewGame()
-        {
-            System.Diagnostics.Process.Start(Application.ExecutablePath); // to start new instance of application
-            this.Close(); //to turn off current app
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            startNewGame();
         }
     }
 }

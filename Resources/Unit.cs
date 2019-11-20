@@ -18,7 +18,6 @@ namespace KillAllNeighbors.Resources.Decorator
         public long PosY { get; set; }       
         public string message { get; set; }
 
-        public int whoWon { get; set; }
         public int isShooting { get; set; }
 
         public int shootingType { get; set; }
@@ -36,7 +35,6 @@ namespace KillAllNeighbors.Resources.Decorator
             health = 100;
             name = "DefaultName";
             message = "";
-                whoWon = 0;
         }
         public void SetId(long _id)
         {

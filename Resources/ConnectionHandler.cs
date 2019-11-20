@@ -42,15 +42,6 @@ namespace KillAllNeighbors.Resources
                 connectionEstablished = true;
             }
         }
-        public async Task DisConnect()
-        {
-            thisPlayer.shootingType = 100;
-            HttpResponseMessage response = await client.PutAsJsonAsync(playerDataURL + "/" + thisPlayer.id, thisPlayer);
-            if (response.IsSuccessStatusCode)
-            {
-                Uri gizmoURL = response.Headers.Location;
-            }
-        }
 
         public async Task UpdatePlayerData()
         {
