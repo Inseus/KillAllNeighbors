@@ -41,13 +41,15 @@ namespace KillAllNeighbors.Resources.Adapter
                 }
                 else
                 {
-
                     enemyList.Find(x => x.id == p.id).getMovableObject().Location = new Point((int)p.PosX, (int)p.PosY);
                     enemyList.Find(x => x.id == p.id).shootingType = p.shootingType;
                     enemyList.Find(x => x.id == p.id).isShooting = p.isShooting;
                     enemyList.Find(x => x.id == p.id).facing = p.facing;
+                    enemyList.Find(x => x.id == p.id).whoWon = p.whoWon;
+
                 }
             }
         }
+
     }
 }
