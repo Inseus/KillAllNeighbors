@@ -76,4 +76,3 @@ C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\obj\Debug\KillAllNe
 C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\obj\Debug\KillAllNeighbors.csproj.CopyComplete
 C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\obj\Debug\KillAllNeighbors.exe
 C:\Users\Marius\Desktop\KTU_Project_KAN\KAN\KillAllNeighbors\obj\Debug\KillAllNeighbors.pdb
-C:\Users\Username\Documents\GitHub\KillAllNeighbors\obj\Debug\KillAllNeighbors.csprojAssemblyReference.cache
