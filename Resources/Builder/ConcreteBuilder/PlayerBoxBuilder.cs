@@ -17,37 +17,32 @@ namespace KillAllNeighbors.Resources.Builder
             return box;
         }
 
-        public override PictureBoxBuilder BuildLocation()
+        public override void BuildLocation()
         {
             box.Location = new Point(0, 0);
-            return this;
         }
 
-        public override PictureBoxBuilder BuildName()
+        public override void BuildName()
         {
             box.Name = "player";
-            return this;
         }
 
 
-        public override PictureBoxBuilder BuildPictureColor()
+        public override void BuildPictureColor()
         {
             box.BackColor = System.Drawing.Color.Transparent;
-            return this;
         }
 
-        public override PictureBoxBuilder BuildPictureImage()
+        public override void BuildPictureImage()
         {
             
             box.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             box.Image = global::KillAllNeighbors.Properties.Resources.cirle;
-            return this;
         }
 
-        public override PictureBoxBuilder BuildPictureSize()
+        public override void BuildPictureSize()
         {
             box.Size= new Size(35, 35);
-            return this;
         }
     }
 }

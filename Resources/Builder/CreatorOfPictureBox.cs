@@ -11,18 +11,15 @@ namespace KillAllNeighbors.Resources.Builder
     {
         public PictureBox Construct(PictureBoxBuilder builder)
         {
-            return builder.BuildLocation()
-                .BuildName()
-                .BuildName()
-                .BuildPictureColor()
-                .BuildPictureImage()
-                .BuildPictureSize().GetResult();
+            // everything
+            builder.TemplateMethod();
+            return builder.GetResult();
         }
         public PictureBox ConstructMinimal(PictureBoxBuilder builder)
         {
-            return builder.BuildName()
-            .BuildPictureColor()
-            .BuildPictureSize().GetResult();
+            // name color size
+            builder.TemplateMethod();
+            return builder.GetResult();
         }
     }
 }

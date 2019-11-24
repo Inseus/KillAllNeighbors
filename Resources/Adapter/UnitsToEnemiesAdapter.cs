@@ -23,7 +23,7 @@ namespace KillAllNeighbors.Resources.Adapter
             {
                 return;
             }
-            if(playerCollection.Count == 0)
+            if (playerCollection.Count ==0 )
             {
                 return;
             }

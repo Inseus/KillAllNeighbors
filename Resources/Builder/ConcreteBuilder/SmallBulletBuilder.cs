@@ -18,37 +18,41 @@ namespace KillAllNeighbors.Resources.Builder
         }
 
 
-        public override PictureBoxBuilder BuildName()
+        public override void BuildName()
         {
             box.Name = "bullet";
-            return this;
         }
 
 
-        public override PictureBoxBuilder BuildPictureColor()
+        public override void BuildPictureColor()
         {
             box.BackColor = System.Drawing.Color.Black; // set the colour white for the bullet
-            return this;
 
         }
 
-        public override PictureBoxBuilder BuildPictureImage()
+        public override void BuildPictureImage()
         {
             
             box.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             box.Image = global::KillAllNeighbors.Properties.Resources.cirle;
-            return this;
         }
 
-        public override PictureBoxBuilder BuildPictureSize()
+        public override void BuildPictureSize()
         {
             box.Size= new Size(3, 3);
-            return this;
         }
 
-        public override PictureBoxBuilder BuildLocation()
+        public override void BuildLocation()
         {
-            return this;
+        }
+        public override bool doBuildPictureImage()
+        {
+            return false;
+        }
+
+        public override bool doBuildLocation()
+        {
+            return false;
         }
     }
 }

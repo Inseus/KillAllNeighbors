@@ -112,6 +112,10 @@
     <Compile Include="Resources\ConnectionHandler.cs" />
     <Compile Include="Resources\Constants.cs" />
     <Compile Include="Resources\Enemy.cs" />
+    <Compile Include="Resources\States\GameOver.cs" />
+    <Compile Include="Resources\States\GameStarted.cs" />
+    <Compile Include="Resources\States\GameState.cs" />
+    <Compile Include="Resources\States\StartGame.cs" />
     <Compile Include="Resources\Unit.cs" />
     <Compile Include="Resources\Player.cs" />
     <Compile Include="Resources\Facade\Facade.cs" />

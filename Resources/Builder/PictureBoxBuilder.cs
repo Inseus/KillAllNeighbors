@@ -14,14 +14,47 @@ namespace KillAllNeighbors.Resources.Builder
         {
             box = m;
         }
-        public abstract PictureBoxBuilder BuildName();
-        public abstract PictureBoxBuilder BuildPictureImage();
+        public virtual bool doBuildName()
+        {
+            return true;
+        }
+        public virtual bool doBuildPictureImage()
+        {
+            return true;
+        }
+        public virtual bool doBuildPictureSize()
+        {
+            return true;
+        }
+        public virtual bool doBuildLocation()
+        {
+            return true;
+        }
+        public virtual bool doBuildPictureColor()
+        {
+            return true;
+        }
+        public abstract void BuildName();
+        public abstract void BuildPictureImage();
 
-        public abstract PictureBoxBuilder BuildPictureSize();
+        public abstract void BuildPictureSize();
 
-        public abstract PictureBoxBuilder BuildLocation();
+        public abstract void BuildLocation();
 
-        public abstract PictureBoxBuilder BuildPictureColor();
+        public abstract void BuildPictureColor();
         public abstract PictureBox GetResult();
+        public void TemplateMethod()
+        {
+            if(doBuildName())
+            BuildName();
+            if(doBuildPictureImage())
+            BuildPictureImage();
+            if (doBuildPictureSize())
+                BuildPictureSize();
+            if (doBuildLocation())
+                BuildLocation();
+            if (doBuildPictureColor())
+                BuildPictureColor();
+        }
     }
 }

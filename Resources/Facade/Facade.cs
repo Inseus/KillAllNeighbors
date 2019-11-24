@@ -1,6 +1,8 @@
 ﻿using KillAllNeighbors.Resources.Adapter;
 using KillAllNeighbors.Resources.Builder;
 using KillAllNeighbors.Resources.Decorator;
+using KillAllNeighbors.Resources.State;
+using KillAllNeighbors.Resources.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +23,11 @@ namespace KillAllNeighbors.Resources.Facade
         Timer gameTimer;
         Timer moveTimer;
         Timer requestTimer;
+        GameState state = null;
 
         public Facade(Form1 playerBoard, Player boardPlayer, CreatorOfPictureBox creator, Timer a, Timer b, Timer c)
         {
+            state = new StartGame();
             gameTimer = a;
             moveTimer = b;
             requestTimer = c;
@@ -33,7 +37,15 @@ namespace KillAllNeighbors.Resources.Facade
             this.player = boardPlayer;
             connectionHandler = new ConnectionHandler(boardPlayer);
             enemyList = new List<Enemy>();
-            Connect();
+            gameAction();
+        }
+        public void setState(GameState state)
+        {
+            this.state = state;
+        }
+        public void gameAction()
+        {
+            state.Handle(connectionHandler);
         }
         public void endGame()
         {
@@ -44,7 +56,8 @@ namespace KillAllNeighbors.Resources.Facade
                 {
                     playerBoard.LabelText = "You won";
                     stopTimers();
-                    DisConnect();
+                    setState(new GameOver());
+                    gameAction();
                 }
                 else
                 {
@@ -52,7 +65,7 @@ namespace KillAllNeighbors.Resources.Facade
                     stopTimers();
 
                 }
-                stopTimers();
+                
             }
         }
         public void stopTimers()
@@ -61,15 +74,6 @@ namespace KillAllNeighbors.Resources.Facade
             moveTimer.Enabled = false;
             requestTimer.Enabled = false;
             
-        }
-        private async void DisConnect()
-        {
-            await connectionHandler.DisConnect();
-        }
-
-        private async void Connect()
-        {
-            await connectionHandler.Connect();
         }
 
         private void UpdateEnemyListFromServer()
@@ -103,7 +107,8 @@ namespace KillAllNeighbors.Resources.Facade
         {
             if (connectionHandler.connectionEstablished)
             {
-                connectionHandler.UpdatePlayerData();
+                setState(new GameStarted());
+                gameAction();
                 UpdateEnemyListFromServer();
                 EnemiesShooting();
             }
