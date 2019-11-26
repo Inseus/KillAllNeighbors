@@ -2,6 +2,7 @@
 using KillAllNeighbors.Resources.Adapter;
 using KillAllNeighbors.Resources.Builder;
 using KillAllNeighbors.Resources.Command;
+using KillAllNeighbors.Resources.Composite;
 using KillAllNeighbors.Resources.Decorator;
 using KillAllNeighbors.Resources.Facade;
 using KillAllNeighbors.Resources.Strategy;
@@ -45,6 +46,7 @@ namespace KillAllNeighbors
 
         private void AddEvents()
         {
+            obstacleCreation();
             gameTimer.Tick += HandleCoinsControlTick;
             moveTimer.Tick += HandleMoveTimerTick;
             requestTimer.Tick += HandleRequestTick;
@@ -65,6 +67,14 @@ namespace KillAllNeighbors
                 //TryShoot();
                 //Collisions();
             }
+        }
+        void obstacleCreation()
+        {
+            CompositeElement obstacle = formControls.SpawnObstacles();
+
+            Controls.Add(obstacle.line);
+            for (int i = 0; i < obstacle.elements.Count; i++)
+                Controls.Add(obstacle.elements[i].line);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

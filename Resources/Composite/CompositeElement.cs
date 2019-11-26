@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KillAllNeighbors.Resources.Composite
+{
+    public class CompositeElement : DrawingElement
+    {
+        public List<DrawingElement> elements = new List<DrawingElement>();
+
+        // Constructor
+        public CompositeElement(string name, int posX, int posY, int sizeX, int sizeY)
+          : base(name,posX,posY,sizeX,sizeY)
+        {
+
+        }
+        public override void Add(DrawingElement d)
+        {
+            elements.Add(d);
+        }
+        public override void Remove(DrawingElement d)
+        {
+            elements.Remove(d);
+        }
+        public override void Display(int indent)
+        {
+            Console.WriteLine(new String('-', indent) + "+ " + _name);
+            // Display each child element on this node
+            foreach (DrawingElement d in elements)
+            {
+                d.Display(indent + 2);
+            }
+        }
+    }
+}

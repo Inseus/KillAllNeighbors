@@ -91,6 +91,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Composite\CompositeElement.cs" />
+    <Compile Include="Resources\Composite\DrawingElement.cs" />
+    <Compile Include="Resources\Composite\PrimitiveElement.cs" />
     <Compile Include="Resources\Proxy\VectorProxy.cs" />
     <Compile Include="Resources\Adapter\IUnitsToEnemies.cs" />
     <Compile Include="Resources\Adapter\UnitsToEnemiesAdapter.cs" />

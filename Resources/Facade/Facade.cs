@@ -1,5 +1,6 @@
 ﻿using KillAllNeighbors.Resources.Adapter;
 using KillAllNeighbors.Resources.Builder;
+using KillAllNeighbors.Resources.Composite;
 using KillAllNeighbors.Resources.Decorator;
 using KillAllNeighbors.Resources.State;
 using KillAllNeighbors.Resources.States;
@@ -102,7 +103,35 @@ namespace KillAllNeighbors.Resources.Facade
                 }
             }
         }
+        public CompositeElement SpawnObstacles()
+        {
+            CompositeElement obstacle = new CompositeElement("horizontal1", 220, 200, 200, 20);
+            obstacle.Add(new PrimitiveElement("vertical1", 400, 200, 20, 200));
+            obstacle.Add(new PrimitiveElement("horizontal2", 1000, 380, 200, 20));
+            obstacle.Add(new PrimitiveElement("vertical2", 980, 200, 20, 200));
+            obstacle.Add(new PrimitiveElement("verticalMiddle1", 610, 0, 20, 200));
+            obstacle.Add(new PrimitiveElement("verticalMiddle2", 810, 500, 20, 200));
 
+            return obstacle;
+
+
+            //Controls.Add(obstacle1.line);
+            //for (int i = 0; i < obstacle1.elements.Count; i++)
+            //    Controls.Add(obstacle1.elements[i].line);
+
+            //CompositeElement obstacle2 = new CompositeElement("horizontal2", 1000, 380, 200, 20);
+            //obstacle2.Add(new PrimitiveElement("vertical2", 980, 200, 20, 200));
+
+            //Controls.Add(obstacle2.line);
+            //for (int i = 0; i < obstacle2.elements.Count; i++)
+            //    Controls.Add(obstacle2.elements[i].line);
+
+            //PrimitiveElement verticalMiddle1 = new PrimitiveElement("verticalMiddle1", 610, 0, 20, 200);
+            //PrimitiveElement verticalMiddle2 = new PrimitiveElement("verticalMiddle2", 810, 500, 20, 200);
+            //Controls.Add(verticalMiddle1.line);
+            //Controls.Add(verticalMiddle2.line);
+
+        }
         public void HandleConnection()
         {
             if (connectionHandler.connectionEstablished)
