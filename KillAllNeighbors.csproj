@@ -94,6 +94,8 @@
     <Compile Include="Resources\Composite\CompositeElement.cs" />
     <Compile Include="Resources\Composite\DrawingElement.cs" />
     <Compile Include="Resources\Composite\PrimitiveElement.cs" />
+    <Compile Include="Resources\Iterator\CoinsCollection.cs" />
+    <Compile Include="Resources\Iterator\CoinsIterator.cs" />
     <Compile Include="Resources\Proxy\VectorProxy.cs" />
     <Compile Include="Resources\Adapter\IUnitsToEnemies.cs" />
     <Compile Include="Resources\Adapter\UnitsToEnemiesAdapter.cs" />

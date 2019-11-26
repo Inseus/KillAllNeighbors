@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KillAllNeighbors.Resources.Iterator;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -14,10 +15,12 @@ namespace KillAllNeighbors.Resources
         private int currentCoins = 0;
         private Random seed;
         private Timer coinSpawnTimer = new Timer { Interval = 1000 }; //Every 1 sec
-        private List<ICurrency> coinList = new List<ICurrency>();
+        private CoinsCollection coinList = new CoinsCollection();
+        private CoinsIterator coinsIterator;
 
         public CoinsController()
         {
+            coinsIterator = new CoinsIterator(coinList);
             seed = new Random();
         }
 
@@ -33,9 +36,23 @@ namespace KillAllNeighbors.Resources
             }
         }
 
-        public List<ICurrency> GetCoinList()
+        public ICurrency GetCollidingCoin(PictureBox moveableObj)
         {
-            return coinList;
+            if (CoinsHandler.Instance.IsIntersecting(coinsIterator.First(), moveableObj))
+                return coinsIterator.CurrentCoin;
+
+            while (!coinsIterator.IsEnd)
+            {
+                var _tmpCoin = coinsIterator.Next();
+                if (_tmpCoin != null)
+                    if (CoinsHandler.Instance.IsIntersecting(coinsIterator.CurrentCoin, moveableObj))
+                    {
+                        CoinsHandler.Instance.AddCoins();
+                        return coinsIterator.CurrentCoin;
+                    }
+            }
+
+            return null;
         }
 
         public void RemoveCoin(ICurrency coin)
@@ -48,7 +65,7 @@ namespace KillAllNeighbors.Resources
         {
             ICurrency _tempCoin = CoinsFactory.MakeCoin(seed.Next(1, 11), seed.Next(Constants.MIN_BOUND_X, Constants.VIEW_SIZE_X), seed.Next(Constants.MIN_BOUND_Y, Constants.VIEW_SIZE_Y));
             currentCoins++;
-            coinList.Add(_tempCoin);
+            coinsIterator.Add(_tempCoin);
             return _tempCoin;
         }
 

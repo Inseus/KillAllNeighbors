@@ -162,7 +162,8 @@ namespace KillAllNeighbors
         }
         private void TryCollectCoin()
         {
-            ICurrency _temp = CoinsHandler.Instance.TryCollectCoin(thisPlayer.getMovableObject(), formControls.GetCoinList());
+
+            ICurrency _temp = formControls.GetCollidingCoin(thisPlayer.getMovableObject());
             if (_temp != null)
             {
                 formControls.RemoveCoin(_temp);

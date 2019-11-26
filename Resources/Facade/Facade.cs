@@ -64,9 +64,7 @@ namespace KillAllNeighbors.Resources.Facade
                 {
                     playerBoard.LabelText = "Game over player" +a.whoWon+" won";
                     stopTimers();
-
                 }
-                
             }
         }
         public void stopTimers()
@@ -74,7 +72,6 @@ namespace KillAllNeighbors.Resources.Facade
             gameTimer.Enabled = false;
             moveTimer.Enabled = false;
             requestTimer.Enabled = false;
-            
         }
 
         private void UpdateEnemyListFromServer()
@@ -153,10 +150,11 @@ namespace KillAllNeighbors.Resources.Facade
             return coinsController.SpawnNewCoin();
         }
 
-        public List<ICurrency> GetCoinList()
+        public ICurrency GetCollidingCoin(PictureBox moveableObj)
         {
-            return coinsController.GetCoinList();
+            return coinsController.GetCollidingCoin(moveableObj);
         }
+
 
         public List<Enemy> GetEnemyList()
         {

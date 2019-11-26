@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using KillAllNeighbors.Resources.Iterator;
 
 namespace KillAllNeighbors.Resources
 {
@@ -44,24 +45,15 @@ namespace KillAllNeighbors.Resources
             coinsCount += number;
         }
 
-        public ICurrency TryCollectCoin(PictureBox moveableObject, List<ICurrency> coinList)
-        {
-            for (int i = 0; i < coinList.Count; i++)
-            {
-                if (IsIntersecting(coinList[i], moveableObject))
-                {
-                    coinsCount += coinList[i].Value;
-                    return coinList[i];
-                }
-            }
-            return null;
-        }
 
-        private bool IsIntersecting(ICurrency coin, PictureBox moveableObject)
+        public bool IsIntersecting(ICurrency coin, PictureBox moveableObject)
         {
-            if (coin.controlItem.Bounds.IntersectsWith(moveableObject.Bounds))
+            if(coin != null)
             {
-                return true;
+                if (coin.controlItem.Bounds.IntersectsWith(moveableObject.Bounds))
+                {
+                    return true;
+                }
             }
             return false;
         }
