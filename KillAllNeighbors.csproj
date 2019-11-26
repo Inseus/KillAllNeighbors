@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Proxy\VectorProxy.cs" />
     <Compile Include="Resources\Adapter\IUnitsToEnemies.cs" />
     <Compile Include="Resources\Adapter\UnitsToEnemiesAdapter.cs" />
     <Compile Include="Resources\Builder\ConcreteBuilder\PistolBulletBuilder.cs" />

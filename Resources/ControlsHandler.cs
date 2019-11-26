@@ -1,4 +1,5 @@
-﻿using KillAllNeighbors.Resources;
+﻿using KillAllNeighbors.Proxy;
+using KillAllNeighbors.Resources;
 using KillAllNeighbors.Resources.Builder;
 using KillAllNeighbors.Resources.Strategy;
 using KillAllNeighbors.Resources.Strategy.Implementation;
@@ -23,6 +24,7 @@ namespace KillAllNeighbors
 
     public class ControlsHandler : IControls
     {
+        VectorProxy proxy = new VectorProxy();
         private static ControlsHandler instance = null;
         private static readonly object instanceLock = new object();
         private int speedMultiplier = 5;
@@ -44,7 +46,7 @@ namespace KillAllNeighbors
         public ControlsHandler()
         {
 
-            zero = new Vector2(0, 0);
+            zero = proxy.Zero();
         }
 
         public Vector2 GetVector()
@@ -124,22 +126,22 @@ namespace KillAllNeighbors
         }
         public Vector2 Upwards()
         {
-            return Keyboard.IsKeyDown(Key.W) ? new Vector2(0, -1) : zero;
+            return Keyboard.IsKeyDown(Key.W) ? proxy.Up() : zero;
         }
         
         public Vector2 Downwards()
         {
-            return Keyboard.IsKeyDown(Key.S) ? new Vector2(0, 1) : zero;
+            return Keyboard.IsKeyDown(Key.S) ? proxy.Down() : zero;
         }
 
         public Vector2 Right()
         {
-            return Keyboard.IsKeyDown(Key.D)? new Vector2(1, 0) : zero;
+            return Keyboard.IsKeyDown(Key.D)? proxy.Right() : zero;
         }
 
         public Vector2 Left()
         {
-            return Keyboard.IsKeyDown(Key.A)? new Vector2(-1, 0) : zero;
+            return Keyboard.IsKeyDown(Key.A)? proxy.Left() : zero;
         }
 
         public bool IsAnyKeyDown()
