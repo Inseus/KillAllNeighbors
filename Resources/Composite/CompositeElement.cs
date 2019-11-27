@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace KillAllNeighbors.Resources.Composite
 {
@@ -14,7 +16,10 @@ namespace KillAllNeighbors.Resources.Composite
         public CompositeElement(string name, int posX, int posY, int sizeX, int sizeY)
           : base(name,posX,posY,sizeX,sizeY)
         {
-
+            line = new PictureBox();
+            line.Size = new Size(SizeX, SizeY);
+            line.BackColor = Color;
+            line.Location = new Point(PosX, PosY);
         }
         public override void Add(DrawingElement d)
         {

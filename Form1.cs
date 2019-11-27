@@ -67,7 +67,7 @@ namespace KillAllNeighbors
                 TryMove();
                 TryCollectCoin();
                 //TryShoot();
-                //Collisions();
+                Collisions();
             }
         }
         void obstacleCreation()
@@ -154,12 +154,32 @@ namespace KillAllNeighbors
             
             if (thisPlayer.getMovableObject().Location.X + _tempVec.x >= Constants.MIN_BOUND_X && thisPlayer.getMovableObject().Location.Y + _tempVec.y >= Constants.MIN_BOUND_Y)
             {
+                CompositeElement obstacle = formControls.SpawnObstacles();
+
+                //check if new player position intersects with an obstacle
+                //root obstacle
+                if(!obstacle.line.Bounds.IntersectsWith(new Rectangle (new Point(thisPlayer.getMovableObject().Location.X + _tempVec.x, thisPlayer.getMovableObject().Location.Y + _tempVec.y),thisPlayer.getMovableObject().Bounds.Size)))
+                {
+                    int intersections = 0;
+                    for (int i = 0; i < obstacle.elements.Count; i++)
+                    {
+                        //all the other obstacles
+                        if (obstacle.elements[i].line.Bounds.IntersectsWith(new Rectangle(new Point(thisPlayer.getMovableObject().Location.X + _tempVec.x, thisPlayer.getMovableObject().Location.Y + _tempVec.y), thisPlayer.getMovableObject().Bounds.Size)))
+                        {
+                            intersections++;
+                        }
+                    }
+                    //if it doesn't intersect the root obstacle or all the other obstacles
+                    if(intersections == 0)
+                        Invoker.AddCommand(new ConcreteCommand(receiver, _tempVec.x, _tempVec.y, thisPlayer));
+                }
+                //old moving               
                 //Resources.Command.ICommand command = new ConcreteCommand(_tempVec.x, _tempVec.y,thisPlayer);
-                Invoker.AddCommand(new ConcreteCommand(receiver, _tempVec.x, _tempVec.y, thisPlayer));
                 //Invoker.AddCommand(_tempVec.x, _tempVec.y, thisPlayer);
                 //thisPlayer.getMovableObject().Location = new Point(thisPlayer.getMovableObject().Location.X + 
                 //    _tempVec.x, thisPlayer.getMovableObject().Location.Y + _tempVec.y);
                 //thisPlayer.setCordinatesFromPictureBoxToPlayer();
+
             }
         }
         private void TryCollectCoin()

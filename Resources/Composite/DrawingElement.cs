@@ -28,14 +28,6 @@ namespace KillAllNeighbors.Resources.Composite
             Color = Color.Black;
             SizeX = sizeX;
             SizeY = sizeY;
-            SetControlItem();
-        }
-        void SetControlItem()
-        {
-            line = new PictureBox();
-            line.Size = new Size(SizeX, SizeY);
-            line.BackColor = Color;
-            line.Location = new Point(PosX, PosY);
         }
 
         public abstract void Add(DrawingElement d);

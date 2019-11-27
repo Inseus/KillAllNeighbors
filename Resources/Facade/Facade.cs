@@ -103,19 +103,19 @@ namespace KillAllNeighbors.Resources.Facade
         public CompositeElement SpawnObstacles()
         {
             CompositeElement obstacle = new CompositeElement("horizontal1", 220, 200, 200, 20);
-            obstacle.Add(new PrimitiveElement("vertical1", 400, 200, 20, 200));
+            obstacle.Add(new PrimitiveElement("vertical1", 400, 200, 200, 20));
 
             CompositeElement obstacle2 = new CompositeElement("horizontal2", 1000, 380, 200, 20);
-            obstacle2.Add(new PrimitiveElement("vertical2", 980, 200, 20, 200));
+            obstacle2.Add(new PrimitiveElement("vertical2", 980, 200, 200, 20));
 
-            PrimitiveElement verticalMiddle1 = new PrimitiveElement("verticalMiddle1", 610, 0, 20, 200);
-            PrimitiveElement verticalMiddle2 = new PrimitiveElement("verticalMiddle2", 810, 500, 20, 200);
+            PrimitiveElement verticalMiddle1 = new PrimitiveElement("verticalMiddle1", 610, 0, 200, 20);
+            PrimitiveElement verticalMiddle2 = new PrimitiveElement("verticalMiddle2", 810, 500, 200, 20);
 
             obstacle.Add(obstacle2);
             obstacle.Add(obstacle2.elements[0]);
             obstacle.Add(verticalMiddle1);
             obstacle.Add(verticalMiddle2);
-
+            obstacle.Display(1);
             return obstacle;
 
         }
