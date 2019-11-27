@@ -47,7 +47,7 @@ namespace KillAllNeighbors.Resources
                 if (_tmpCoin != null)
                     if (CoinsHandler.Instance.IsIntersecting(coinsIterator.CurrentCoin, moveableObj))
                     {
-                        CoinsHandler.Instance.AddCoins();
+                        CoinsHandler.Instance.AddCoins(coinsIterator.CurrentCoin.Value);
                         return coinsIterator.CurrentCoin;
                     }
             }

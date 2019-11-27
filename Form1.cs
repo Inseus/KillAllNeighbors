@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
@@ -31,7 +32,7 @@ namespace KillAllNeighbors
 
         private int coinSpawnInterval = 300;
         private int moveInterval = 30;
-        private int requestInterval = 100;
+        private int requestInterval = 80;
         private Player thisPlayer;
         private Facade formControls;
         private CreatorOfPictureBox creatorOfPictureBox;
@@ -52,6 +53,7 @@ namespace KillAllNeighbors
             requestTimer.Tick += HandleRequestTick;
             this.FormClosing += AppClose;
         }
+
         
         private void HandleRequestTick(object sender, EventArgs e)
         {

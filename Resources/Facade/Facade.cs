@@ -119,11 +119,17 @@ namespace KillAllNeighbors.Resources.Facade
             return obstacle;
 
         }
+
+        private bool isStarted = false;
         public void HandleConnection()
         {
             if (connectionHandler.connectionEstablished)
             {
-                setState(new GameStarted());
+                if (!isStarted)
+                {
+                    setState(new GameStarted());
+                    isStarted = true;
+                }
                 gameAction();
                 UpdateEnemyListFromServer();
                 EnemiesShooting();

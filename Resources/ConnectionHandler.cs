@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,10 +17,11 @@ namespace KillAllNeighbors.Resources
     {
         private static readonly HttpClient client = new HttpClient(new HttpClientHandler
         {
-            UseProxy = false
+            UseProxy = false,
+            Proxy = null
         });
-        private string playerDataURL = "https://localhost:44312/api/player";
-        private string coinsDataURL = "https://localhost:44312/api/coins";
+        private string playerDataURL = "https://localhost:5001/api/player";
+        private string coinsDataURL = "https://localhost:5001/api/coins";
         private Point lastLocation;
         private int lastShooting;
 
@@ -31,6 +33,7 @@ namespace KillAllNeighbors.Resources
             thisPlayer = player;
             lastLocation = new Point(0, 0);
             lastShooting = 1;
+            ServicePointManager.DefaultConnectionLimit = 1000;
         }
 
         public async Task Connect()
@@ -59,7 +62,7 @@ namespace KillAllNeighbors.Resources
                 lastLocation.X = (int)thisPlayer.PosX;
                 lastLocation.Y = (int)thisPlayer.PosY;
                 lastShooting = thisPlayer.isShooting;
-                HttpResponseMessage response = await client.PutAsJsonAsync(playerDataURL + "/" + thisPlayer.id, thisPlayer);
+                HttpResponseMessage response = await client.PutAsJsonAsync(playerDataURL + "/" + thisPlayer.id, thisPlayer).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
                     Uri gizmoURL = response.Headers.Location;
@@ -69,13 +72,11 @@ namespace KillAllNeighbors.Resources
 
         public async Task<ICollection<Unit>> GetAllPlayersData()
         {
-
             ICollection<Unit> players = null;
             HttpResponseMessage response = await client.GetAsync(playerDataURL);
             if (response.IsSuccessStatusCode)
             {
-                players = await response.Content.ReadAsAsync<ICollection<Unit>>();
-
+                players = await response.Content.ReadAsAsync<ICollection<Unit>>().ConfigureAwait(false);
             }
             return players;
         }
