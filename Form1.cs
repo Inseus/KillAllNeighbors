@@ -32,7 +32,7 @@ namespace KillAllNeighbors
 
         private int coinSpawnInterval = 300;
         private int moveInterval = 30;
-        private int requestInterval = 80;
+        private int requestInterval = 300;
         private Player thisPlayer;
         private Facade formControls;
         private CreatorOfPictureBox creatorOfPictureBox;

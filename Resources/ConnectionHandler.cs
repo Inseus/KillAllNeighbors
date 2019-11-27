@@ -73,7 +73,7 @@ namespace KillAllNeighbors.Resources
         public async Task<ICollection<Unit>> GetAllPlayersData()
         {
             ICollection<Unit> players = null;
-            HttpResponseMessage response = await client.GetAsync(playerDataURL);
+            HttpResponseMessage response = await client.GetAsync(playerDataURL).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
                 players = await response.Content.ReadAsAsync<ICollection<Unit>>().ConfigureAwait(false);
