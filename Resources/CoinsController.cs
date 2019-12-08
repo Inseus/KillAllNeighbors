@@ -1,4 +1,5 @@
-﻿using KillAllNeighbors.Resources.Iterator;
+﻿using KillAllNeighbors.Resources.Command.Memento;
+using KillAllNeighbors.Resources.Iterator;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,11 +18,13 @@ namespace KillAllNeighbors.Resources
         private Timer coinSpawnTimer = new Timer { Interval = 1000 }; //Every 1 sec
         private CoinsCollection coinList = new CoinsCollection();
         private CoinsIterator coinsIterator;
+        CareTaker careTaker;
 
         public CoinsController()
         {
             coinsIterator = new CoinsIterator(coinList);
             seed = new Random();
+            careTaker = new CareTaker();
         }
 
         public ICurrency SpawnNewCoin()
@@ -48,11 +51,16 @@ namespace KillAllNeighbors.Resources
                     if (CoinsHandler.Instance.IsIntersecting(coinsIterator.CurrentCoin, moveableObj))
                     {
                         CoinsHandler.Instance.AddCoins(coinsIterator.CurrentCoin.Value);
+                        careTaker.addMemento(CoinsHandler.Instance.createMemento());
                         return coinsIterator.CurrentCoin;
                     }
             }
 
             return null;
+        }
+        public void restoreCoins()
+        {
+            CoinsHandler.Instance.setMemento(careTaker.getMemento());
         }
 
         public void RemoveCoin(ICurrency coin)

@@ -19,7 +19,7 @@ namespace KillAllNeighbors.Resources.Strategy.Implementation
             builder = new SmallBulletBuilder(new PictureBox());
             // Sukuriamas žaidėjo pictur boxas
             var box =creator.ConstructMinimal(builder);
-            return new Bullet(60, box);
+            return new Bullet(20, box);
         }
     }
 }

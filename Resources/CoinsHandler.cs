@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using KillAllNeighbors.Resources.Iterator;
+using KillAllNeighbors.Resources.Command.Memento;
 
 namespace KillAllNeighbors.Resources
 {
@@ -33,6 +34,15 @@ namespace KillAllNeighbors.Resources
                     return instance;
                 }
             }
+        }
+        public Memento createMemento()
+        {
+            return new Memento(coinsCount);
+        }
+
+        public void setMemento(Memento previousMomento)
+        {
+            coinsCount = previousMomento.getCoinsCount();
         }
 
         public int GetCoinsCount()

@@ -90,6 +90,7 @@ namespace KillAllNeighbors.Resources.Facade
                     Bullet typeOfBullet = ControlsHandler.Instance.GetWeaponEnemy(creatorOfPictureBox, enemy.shootingType);
                     if (typeOfBullet != null)
                     {
+                        typeOfBullet.changeName("enemyBullet");
                         typeOfBullet.direction = enemy.facing;
                         typeOfBullet.bulletLeft = enemy.getMovableObject().Left
                             + (enemy.getMovableObject().Width / 2); // place the bullet to left half of the player
@@ -133,6 +134,54 @@ namespace KillAllNeighbors.Resources.Facade
                 gameAction();
                 UpdateEnemyListFromServer();
                 EnemiesShooting();
+            }
+        }
+        public void Collisions()
+        {
+            // run the first for each loop below
+            // X is a control and we will search for all controls in this loop
+            foreach (Enemy x in GetEnemyList())
+            {
+                // below is the second for loop, this is nexted inside the first one
+                // the bullet and zombie needs to be different than each other
+                // then we can use that to determine if the hit each other
+                foreach (Control j in playerBoard.Controls)
+                {
+                    // below is the selection thats identifying the bullet and zombie
+
+                    if ((j is PictureBox && j.Name == "bullet") && (x.getMovableObject() is PictureBox && x.getMovableObject().Name == "enemy"))
+                    {
+                        // below is the if statement thats checking if bullet hits the zombie
+                        if (x.getMovableObject().Bounds.IntersectsWith(j.Bounds))
+                        {
+                            playerBoard.Controls.Remove(j); // this will remove the bullet from the screen
+                            j.Dispose(); // this will dispose the bullet all together from the program
+                            //x.hit();
+                            //if(!x.isAlive())
+                            //{
+                            //    this.Controls.Remove(x.movableObject); // this will remove the zombie from the screen
+                            //    x.movableObject.Dispose(); // this will dispose the zombie from the program
+                            //}
+
+                        }
+                    }
+                    if ((j is PictureBox && j.Name == "enemyBullet"))
+                    {
+                        // below is the if statement thats checking if bullet hits the zombie
+                        if (player.getMovableObject().Bounds.IntersectsWith(j.Bounds))
+                        {
+                            playerBoard.Controls.Remove(j); // this will remove the bullet from the screen
+                            j.Dispose(); // this will dispose the bullet all together from the program
+                            coinsController.restoreCoins();
+                            //if(!x.isAlive())
+                            //{
+                            //    this.Controls.Remove(x.movableObject); // this will remove the zombie from the screen
+                            //    x.movableObject.Dispose(); // this will dispose the zombie from the programD
+                            //}
+
+                        }
+                    }
+                }
             }
         }
 

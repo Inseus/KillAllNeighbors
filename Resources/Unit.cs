@@ -42,5 +42,9 @@ namespace KillAllNeighbors.Resources.Decorator
         {
             id = _id;
         }
+        public void hit()
+        {
+            coins = coins - 10;
+        }
     }
 }

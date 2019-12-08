@@ -38,6 +38,10 @@ namespace KillAllNeighbors.Resources
             this.speed = speed;
             bullet = box;
         }
+        public void changeName(string name)
+        {
+            bullet.Name = name;
+        }
         public void mkBullet(Form form)
         {
             // this function will add the bullet to the game play

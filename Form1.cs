@@ -31,7 +31,7 @@ namespace KillAllNeighbors
         private static readonly object lockObject = new object();
 
         private int coinSpawnInterval = 300;
-        private int moveInterval = 30;
+        private int moveInterval = 20;
         private int requestInterval = 300;
         private Player thisPlayer;
         private Facade formControls;
@@ -67,7 +67,7 @@ namespace KillAllNeighbors
                 TryMove();
                 TryCollectCoin();
                 //TryShoot();
-                Collisions();
+                formControls.Collisions();
             }
         }
         void obstacleCreation()
@@ -225,6 +225,22 @@ namespace KillAllNeighbors
                             //{
                             //    this.Controls.Remove(x.movableObject); // this will remove the zombie from the screen
                             //    x.movableObject.Dispose(); // this will dispose the zombie from the program
+                            //}
+
+                        }
+                    }
+                    if ((j is PictureBox && j.Name == "enemyBullet"))
+                    {
+                        // below is the if statement thats checking if bullet hits the zombie
+                        if (thisPlayer.getMovableObject().Bounds.IntersectsWith(j.Bounds))
+                        {
+                            this.Controls.Remove(j); // this will remove the bullet from the screen
+                            j.Dispose(); // this will dispose the bullet all together from the program
+                            CoinsHandler.Instance.AddCoins(-1);
+                            //if(!x.isAlive())
+                            //{
+                            //    this.Controls.Remove(x.movableObject); // this will remove the zombie from the screen
+                            //    x.movableObject.Dispose(); // this will dispose the zombie from the programD
                             //}
 
                         }

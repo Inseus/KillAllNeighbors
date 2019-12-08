@@ -21,5 +21,11 @@ namespace KillAllNeighbors.Resources.Builder
             builder.TemplateMethod();
             return builder.GetResult();
         }
+        public PictureBox ConstructEnemyBullets(PictureBoxBuilder builder)
+        {
+            // name color size
+            builder.TemplateMethod();
+            return builder.GetResult();
+        }
     }
 }
