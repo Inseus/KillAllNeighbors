@@ -47,14 +47,6 @@ namespace KillAllNeighbors.Resources.Facade
             gameAction();
 
         }
-        public void endGame()
-        {
-            if (enemyList.Find(x => x.whoWon != 0) != null)
-            {
-                Enemy a = enemyList.Find(x => x.whoWon != 0);
-                h1.EndGame(this, a, playerBoard, player);
-            }           
-        }
         public void setState(GameState state)
         {
             this.state = state;
@@ -63,7 +55,16 @@ namespace KillAllNeighbors.Resources.Facade
         {
             state.Handle(connectionHandler);
         }
-        
+        public void endGame()
+        {
+            if (enemyList.Find(x => x.whoWon != 0) != null)
+            {
+                Enemy a = enemyList.Find(x => x.whoWon != 0);
+                h1.EndGame(this, a, playerBoard, player);
+            }
+            
+           
+        }
         public void stopTimers()
         {
             gameTimer.Enabled = false;
