@@ -13,9 +13,9 @@ namespace KillAllNeighbors.Resources.Command.Memento
         {
             this.coinsCount = coinsCount;
         }
-        public int getCoinsCount()
+        public void getCoinsCount(CoinsHandler originator)
         {
-            return coinsCount;
+            originator.setCoinsCount(coinsCount);
         }
     }
 }
