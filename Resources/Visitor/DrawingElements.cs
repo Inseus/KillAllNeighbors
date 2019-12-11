@@ -24,7 +24,6 @@ namespace KillAllNeighbors.Resources.Visitor
             {
                 e.Accept(visitor);
             }
-            Console.WriteLine();
         }
     }
 }

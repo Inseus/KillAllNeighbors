@@ -28,7 +28,18 @@ namespace KillAllNeighbors.Resources.Adapter
                 return;
             }
             Unit tempUnit = playerCollection.Where(player => player.id == thePlayer.id).ToList()[0];
+
+            foreach (var item in playerCollection)
+            {
+                if (item.id == thePlayer.id)
+                {
+                    thePlayer.message = item.message;
+                    break;
+                }
+            }
+
             playerCollection = playerCollection.Where(player => player.id != thePlayer.id).ToList();
+
             if (tempUnit.isShooting==1)
             {
                 thePlayer.isShooting = 0;

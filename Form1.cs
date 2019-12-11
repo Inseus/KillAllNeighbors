@@ -66,8 +66,12 @@ namespace KillAllNeighbors
         }
         private void HandleMoveTimerTick(object sender, EventArgs e)
         {
+            if (label3.Text != thisPlayer.message)
+                label3.Text = thisPlayer.message;
             if (Keyboard.IsKeyDown(Key.NumPad5))
             {
+                Console.Clear();
+                Console.WriteLine("Write command:");
                 string _command = Console.ReadLine();
                 Context _tempContext = new Context(_command, this.BackColor);
                 Interpreter interpreter = new Interpreter();
