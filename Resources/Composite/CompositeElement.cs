@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KillAllNeighbors.Resources.Visitor;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace KillAllNeighbors.Resources.Composite
 
         // Constructor
         public CompositeElement(string name, int posX, int posY, int sizeX, int sizeY)
-          : base(name,posX,posY,sizeX,sizeY)
+          : base(name, posX, posY, sizeX, sizeY)
         {
             line = new PictureBox();
             line.Size = new Size(SizeX, SizeY);
@@ -31,11 +32,20 @@ namespace KillAllNeighbors.Resources.Composite
         }
         public override void Display(int indent)
         {
+            Console.WriteLine(new String('-', indent) + "+ " + _name);
             // Display each child element on this node
             foreach (DrawingElement d in elements)
             {
                 d.Display(indent + 2);
             }
+        }
+        public override void Accept(IVisitors visitor)
+        {
+            visitor.VisitCompositeElement(this);
+        }
+        public void OperationB()
+        {
+
         }
     }
 }

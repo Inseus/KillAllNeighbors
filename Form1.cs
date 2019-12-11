@@ -43,6 +43,7 @@ namespace KillAllNeighbors
         private Receiver receiver = new Receiver();
         delegate void AddOrRemoveToControl(ICurrency coin);
         delegate void GetVector();
+        private bool wasExecuted = false;
 
         public Form1()
         {
@@ -51,7 +52,6 @@ namespace KillAllNeighbors
 
         private void AddEvents()
         {
-            obstacleCreation();
             gameTimer.Tick += HandleCoinsControlTick;
             moveTimer.Tick += HandleMoveTimerTick;
             requestTimer.Tick += HandleRequestTick;
@@ -86,11 +86,16 @@ namespace KillAllNeighbors
         }
         void obstacleCreation()
         {
-            CompositeElement obstacle = formControls.SpawnObstacles();
-
-            Controls.Add(obstacle.line);
-            for (int i = 0; i < obstacle.elements.Count; i++)
-                Controls.Add(obstacle.elements[i].line);
+            List<CompositeElement> compositeList = new List<CompositeElement>();
+            List<PrimitiveElement> primitiveList = new List<PrimitiveElement>();
+            (compositeList, primitiveList) = formControls.SpawnObstacles();
+            foreach (var composite in compositeList)
+            {
+                Controls.Add(composite.line);
+                Controls.Add(composite.elements[0].line);
+            }
+            foreach (var primitive in primitiveList)
+                Controls.Add(primitive.line);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -165,36 +170,48 @@ namespace KillAllNeighbors
         private void TryMove()
         {
             Vector2 _tempVec = ControlsHandler.Instance.GetVector();
-            
+
             if (thisPlayer.getMovableObject().Location.X + _tempVec.x >= Constants.MIN_BOUND_X && thisPlayer.getMovableObject().Location.Y + _tempVec.y >= Constants.MIN_BOUND_Y)
             {
-                CompositeElement obstacle = formControls.SpawnObstacles();
-
+                //CompositeElement obstacle = formControls.SpawnObstacles();
+                List<CompositeElement> compositeList = new List<CompositeElement>();
+                List<PrimitiveElement> primitiveList = new List<PrimitiveElement>();
+                (compositeList, primitiveList) = formControls.SpawnObstacles();
+                wasExecuted = CallOnce(wasExecuted);
+                //obstacleVisit(compositeList, primitiveList);
+                int compositeCount = 0;
+                int intersections = 0; //to avoid speedup
+                int count = 0;
                 //check if new player position intersects with an obstacle
-                //root obstacle
-                if(!obstacle.line.Bounds.IntersectsWith(new Rectangle (new Point(thisPlayer.getMovableObject().Location.X + _tempVec.x, thisPlayer.getMovableObject().Location.Y + _tempVec.y),thisPlayer.getMovableObject().Bounds.Size)))
-                {
-                    int intersections = 0;
-                    for (int i = 0; i < obstacle.elements.Count; i++)
+                //root obstacles
+                foreach (var composite in compositeList)
+                    if (!composite.line.Bounds.IntersectsWith(new Rectangle(new Point(thisPlayer.getMovableObject().Location.X + _tempVec.x, thisPlayer.getMovableObject().Location.Y + _tempVec.y), thisPlayer.getMovableObject().Bounds.Size)))
                     {
-                        //all the other obstacles
-                        if (obstacle.elements[i].line.Bounds.IntersectsWith(new Rectangle(new Point(thisPlayer.getMovableObject().Location.X + _tempVec.x, thisPlayer.getMovableObject().Location.Y + _tempVec.y), thisPlayer.getMovableObject().Bounds.Size)))
+                        compositeCount++;
+
+                        foreach (var leaf in composite.elements)
                         {
-                            intersections++;
+                            //leafs in this root
+                            if (leaf.line.Bounds.IntersectsWith(new Rectangle(new Point(thisPlayer.getMovableObject().Location.X + _tempVec.x, thisPlayer.getMovableObject().Location.Y + _tempVec.y), thisPlayer.getMovableObject().Bounds.Size)))
+                                intersections++;
                         }
                     }
-                    //if it doesn't intersect the root obstacle or all the other obstacles
-                    if(intersections == 0)
-                        Invoker.AddCommand(new ConcreteCommand(receiver, _tempVec.x, _tempVec.y, thisPlayer));
+                // all other obstacles
+                foreach (var primitive in primitiveList)
+                    if (!primitive.line.Bounds.IntersectsWith(new Rectangle(new Point(thisPlayer.getMovableObject().Location.X + _tempVec.x, thisPlayer.getMovableObject().Location.Y + _tempVec.y), thisPlayer.getMovableObject().Bounds.Size)))
+                        count++;
+                if (intersections == 0 && compositeCount == compositeList.Count && count == primitiveList.Count)
+                {
+                    Invoker.AddCommand(new ConcreteCommand(receiver, _tempVec.x, _tempVec.y, thisPlayer)); //moves if no obstacles collided in composite and primitive
                 }
-                //old moving               
-                //Resources.Command.ICommand command = new ConcreteCommand(_tempVec.x, _tempVec.y,thisPlayer);
-                //Invoker.AddCommand(_tempVec.x, _tempVec.y, thisPlayer);
-                //thisPlayer.getMovableObject().Location = new Point(thisPlayer.getMovableObject().Location.X + 
-                //    _tempVec.x, thisPlayer.getMovableObject().Location.Y + _tempVec.y);
-                //thisPlayer.setCordinatesFromPictureBoxToPlayer();
-
             }
+        }
+        public bool CallOnce(bool wasExecuted)
+        {
+
+            if (!wasExecuted)
+                obstacleCreation();
+            return true;
         }
         private void TryCollectCoin()
         {

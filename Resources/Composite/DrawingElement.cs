@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KillAllNeighbors.Resources.Visitor;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Windows.Forms;
 
 namespace KillAllNeighbors.Resources.Composite
 {
-    public abstract class DrawingElement
+    public abstract class DrawingElement : Element
     {
         public PictureBox line { get; set; }
         public int PosX { get; set; }
@@ -20,7 +21,7 @@ namespace KillAllNeighbors.Resources.Composite
         protected string _name;
 
         // Constructor
-        public DrawingElement(string name, int posX, int posY,int sizeX, int sizeY)
+        public DrawingElement(string name, int posX, int posY, int sizeX, int sizeY)
         {
             this._name = name;
             PosX = posX;

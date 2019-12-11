@@ -5,6 +5,7 @@ using KillAllNeighbors.Resources.Composite;
 using KillAllNeighbors.Resources.Decorator;
 using KillAllNeighbors.Resources.State;
 using KillAllNeighbors.Resources.States;
+using KillAllNeighbors.Resources.Visitor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,10 +99,16 @@ namespace KillAllNeighbors.Resources.Facade
                 }
             }
         }
-        public CompositeElement SpawnObstacles()
+        public (List<CompositeElement>, List<PrimitiveElement>) SpawnObstacles()
         {
+            List<CompositeElement> compositeList = new List<CompositeElement>();
+            List<PrimitiveElement> primitiveList = new List<PrimitiveElement>();
+
             CompositeElement obstacle = new CompositeElement("horizontal1", 220, 200, 200, 20);
             obstacle.Add(new PrimitiveElement("vertical1", 400, 200, 200, 20));
+
+            //obstacle.Add(new CompositeElement("horizontal2", 1000, 380, 200, 20));
+            //obstacle.Add(new PrimitiveElement("vertical2", 980, 200, 200, 20));
 
             CompositeElement obstacle2 = new CompositeElement("horizontal2", 1000, 380, 200, 20);
             obstacle2.Add(new PrimitiveElement("vertical2", 980, 200, 200, 20));
@@ -109,13 +116,46 @@ namespace KillAllNeighbors.Resources.Facade
             PrimitiveElement verticalMiddle1 = new PrimitiveElement("verticalMiddle1", 610, 0, 200, 20);
             PrimitiveElement verticalMiddle2 = new PrimitiveElement("verticalMiddle2", 810, 500, 200, 20);
 
-            obstacle.Add(obstacle2);
-            obstacle.Add(obstacle2.elements[0]);
-            obstacle.Add(verticalMiddle1);
-            obstacle.Add(verticalMiddle2);
-            obstacle.Display(1);
-            return obstacle;
+            compositeList.Add(obstacle);
+            compositeList.Add(obstacle2);
 
+            primitiveList.Add(verticalMiddle1);
+            primitiveList.Add(verticalMiddle2);
+
+            //obstacle.Add(obstacle2);
+            //obstacle.Add(obstacle2.elements[0]);
+            //obstacle.Add(verticalMiddle1);
+            //obstacle.Add(verticalMiddle2);
+            //obstacle.Display(1);
+            //obstacle2.Display(1);
+            //verticalMiddle1.Display(1);
+            //verticalMiddle2.Display(1);
+
+            obstacleVisit(compositeList, primitiveList);
+
+            return (compositeList, primitiveList);
+
+        }
+        void obstacleVisit(List<CompositeElement> compositeList, List<PrimitiveElement> primitiveList)
+        {
+            DrawingElements element1 = new DrawingElements();
+            DrawingElements element2 = new DrawingElements();
+            foreach (var el in compositeList)
+            {
+                element1.Attach(el);
+                element1.Attach(el.elements[0]);
+            }
+                
+            foreach (var el in primitiveList)
+                element2.Attach(el);
+
+
+            //element1.Accept(new SwitchVisitor());
+            element2.Accept(new SwitchVisitor());
+            element1.Accept(new SmallVisitor());
+            //element2.Accept(new SmallVisitor());
+            //element1.Accept(new LargeVisitor());
+            //element2.Accept(new LargeVisitor());
         }
 
         private bool isStarted = false;

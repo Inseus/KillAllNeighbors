@@ -139,6 +139,12 @@
     <Compile Include="Resources\Strategy\ShootAlgorithm.cs" />
     <Compile Include="Resources\Vector2.cs" />
     <Compile Include="Resources\ControlsHandler.cs" />
+    <Compile Include="Resources\Visitor\DrawingElements.cs" />
+    <Compile Include="Resources\Visitor\Element.cs" />
+    <Compile Include="Resources\Visitor\IVisitor.cs" />
+    <Compile Include="Resources\Visitor\LargeVisitor.cs" />
+    <Compile Include="Resources\Visitor\SwitchVisitor.cs" />
+    <Compile Include="Resources\Visitor\SmallVisitor.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
