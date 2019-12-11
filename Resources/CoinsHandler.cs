@@ -39,10 +39,15 @@ namespace KillAllNeighbors.Resources
         {
             return new Memento(coinsCount);
         }
+        public void setCoinsCount(int number)
+        {
+            coinsCount = number;
+        }
 
         public void setMemento(Memento previousMomento)
         {
-            coinsCount = previousMomento.getCoinsCount();
+            previousMomento.getCoinsCount(Instance);
+
         }
 
         public int GetCoinsCount()
