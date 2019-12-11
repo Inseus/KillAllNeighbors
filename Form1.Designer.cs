@@ -1,4 +1,6 @@
-﻿namespace KillAllNeighbors
+﻿using System;
+
+namespace KillAllNeighbors
 {
     partial class Form1
     {

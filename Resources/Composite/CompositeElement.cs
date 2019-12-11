@@ -31,7 +31,6 @@ namespace KillAllNeighbors.Resources.Composite
         }
         public override void Display(int indent)
         {
-            Console.WriteLine(new String('-', indent) + "+ " + _name);
             // Display each child element on this node
             foreach (DrawingElement d in elements)
             {

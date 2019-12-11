@@ -30,8 +30,7 @@ namespace KillAllNeighbors.Resources.Composite
         }
         public override void Display(int indent)
         {
-            Console.WriteLine(
-              new String('-', indent) + " " + _name);
+
         }
     }
 }

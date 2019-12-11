@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,6 +25,9 @@ namespace KillAllNeighbors
 {
     public partial class Form1 : Form
     {
+        [DllImport("Kernel32.dll")]
+        static extern Boolean AllocConsole();
+
         // Interval 1000 = 1 sekunde, kuo didesnis skaicius, tuo leciau viskas vyks
         private Timer gameTimer;
         private Timer moveTimer;
@@ -62,6 +66,16 @@ namespace KillAllNeighbors
         }
         private void HandleMoveTimerTick(object sender, EventArgs e)
         {
+            if (Keyboard.IsKeyDown(Key.NumPad5))
+            {
+                string _command = Console.ReadLine();
+                Context _tempContext = new Context(_command, this.BackColor);
+                Interpreter interpreter = new Interpreter();
+                interpreter.Interpret(_tempContext);
+                this.BackColor = _tempContext.bgColor;
+                Console.WriteLine(_tempContext.Command);
+            }
+
             lock (lockObject)
             {
                 TryMove();
@@ -194,6 +208,10 @@ namespace KillAllNeighbors
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            if (!AllocConsole())
+                MessageBox.Show("Failed");
+            Console.WriteLine("test");
+
             SetValues();
             moveTimer.Start();
             gameTimer.Start();

@@ -94,6 +94,8 @@
     <Compile Include="Resources\ChainOfResponsability\YouLost.cs" />
     <Compile Include="Resources\ChainOfResponsability\YouWon.cs" />
     <Compile Include="Resources\ChainOfResponsability\HandleGameOver.cs" />
+    <Compile Include="Resources\Interpreter\Context.cs" />
+    <Compile Include="Resources\Interpreter\Interpreter.cs" />
     <Compile Include="Resources\Memento\CareTaker.cs" />
     <Compile Include="Resources\Memento\Memento.cs" />
     <Compile Include="Resources\Composite\CompositeElement.cs" />
